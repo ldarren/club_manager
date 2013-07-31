@@ -1,0 +1,197 @@
+*{
+    margin:0;
+    padding:0;
+}
+@media (max-height: 1080px){
+body{
+    background:url('../res/img/bg_small.png') #649f00 no-repeat;
+    background-position: center top;
+}
+ul#gameMenu{
+    display:block;
+    margin: 100px auto 0 auto;
+    width:1024px;
+    height:400px;
+}
+ul#gameMenu li#stadium { margin:220px 0 0 250px; width: 459px; height:258px; z-index:800;}
+ul#gameMenu li#news { margin:0px 0 0 500px; width: 404px; height: 424px; z-index:400;}
+ul#gameMenu li#academy { margin:80px 0 0 100px; width: 323px; height: 292px; z-index:300;}
+ul#gameMenu li#rehab { margin:350px 0 0 500px; width: 445px; height: 362px; z-index:600;}
+ul#gameMenu li#admin { margin:70px 0 0 350px; width: 338px; height: 245px; z-index:500;}
+ul#gameMenu li#train { margin:450px 0 0 150px; width: 425px; height: 260px; z-index:700;}
+ul#gameMenu li#fame { margin:100px 0 0 800px; width: 321px; height: 531px; z-index:200;}
+ul#gameMenu li#factory { margin:300px 0 0 -50px; width: 333px; height: 269px; z-index:100;}
+}
+@media (min-height: 1081px){
+body{
+    background:url('../res/img/bg.png') #649f00 no-repeat;
+    background-position: center top;
+}
+ul#gameMenu{
+    display:block;
+    margin: 300px auto 0 auto;
+    width:1024px;
+    height:400px;
+}
+ul#gameMenu li#stadium { margin:280px 0 0 250px; width: 459px; height:258px; z-index:800;}
+ul#gameMenu li#news { margin:0px 0 0 650px; width: 404px; height: 424px; z-index:400;}
+ul#gameMenu li#academy { margin:80px 0 0 0px; width: 323px; height: 292px; z-index:300;}
+ul#gameMenu li#rehab { margin:400px 0 0 600px; width: 445px; height: 362px; z-index:600;}
+ul#gameMenu li#admin { margin:70px 0 0 350px; width: 338px; height: 245px; z-index:500;}
+ul#gameMenu li#train { margin:500px 0 0 100px; width: 425px; height: 260px; z-index:700;}
+ul#gameMenu li#fame { margin:100px 0 0 1000px; width: 321px; height: 531px; z-index:200;}
+ul#gameMenu li#factory { margin:300px 0 0 -200px; width: 333px; height: 269px; z-index:100;}
+}
+
+ul#gameMenu li {
+    display: inline-block;
+    position: absolute;
+    list-style: none;
+}
+ul#gameMenu li a {
+    display: inline-block;
+    text-indent: -9999px;
+    text-decoration: none;
+    outline: none;
+    cursor: default;
+}
+
+ul#gameMenu li#stadium a { width: 459px; height: 262px; background: url('../res/img/stadium.png') no-repeat; }
+ul#gameMenu li#stadium a:hover { background: url('../res/img/stadium_o.png') no-repeat; }
+ul#gameMenu li#stadium a:active{ background: url('../res/img/stadium_d.png') no-repeat; }
+
+ul#gameMenu li#news a { width: 408px; height: 428px; background: url('../res/img/news.png') no-repeat; }
+ul#gameMenu li#news a:hover { background: url('../res/img/news_o.png') no-repeat; }
+ul#gameMenu li#news a:active{ background: url('../res/img/news_d.png') no-repeat; }
+
+ul#gameMenu li#academy a { width: 323px; height: 297px; background: url('../res/img/academy.png') no-repeat; }
+ul#gameMenu li#academy a:hover { background: url('../res/img/academy_o.png') no-repeat; }
+ul#gameMenu li#academy a:active{ background: url('../res/img/academy_d.png') no-repeat; }
+
+ul#gameMenu li#rehab a { width: 445px; height: 366px; background: url('../res/img/rehab.png') no-repeat; }
+ul#gameMenu li#rehab a:hover { background: url('../res/img/rehab_o.png') no-repeat; }
+ul#gameMenu li#rehab a:active{ background: url('../res/img/rehab_d.png') no-repeat; }
+
+ul#gameMenu li#admin a { width: 338px; height: 249px; background: url('../res/img/admin.png') no-repeat; }
+ul#gameMenu li#admin a:hover { background: url('../res/img/admin_o.png') no-repeat; }
+ul#gameMenu li#admin a:active{ background: url('../res/img/admin_d.png') no-repeat; }
+
+ul#gameMenu li#train a { width: 429px; height: 264px; background: url('../res/img/train.png') no-repeat; }
+ul#gameMenu li#train a:hover { background: url('../res/img/train_o.png') no-repeat; }
+ul#gameMenu li#train a:active{ background: url('../res/img/train_d.png') no-repeat; }
+
+ul#gameMenu li#fame a { width: 321px; height: 535px; background: url('../res/img/fame.png') no-repeat; }
+ul#gameMenu li#fame a:hover { background: url('../res/img/fame_o.png') no-repeat; }
+ul#gameMenu li#fame a:active{ background: url('../res/img/fame_d.png') no-repeat; }
+
+ul#gameMenu li#factory a { width: 335px; height: 273px; background: url('../res/img/factory.png') no-repeat; }
+ul#gameMenu li#factory a:hover { background: url('../res/img/factory_o.png') no-repeat; }
+ul#gameMenu li#factory a:active{ background: url('../res/img/factory_d.png') no-repeat; }
+
+footer{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    height:415px;
+    background:url('../res/img/icon_bg.png')no-repeat;
+    background-position: center bottom;
+    pointer-events: none;
+    z-index:1000;
+}
+ul#shortcut{
+    display:block;
+    margin: 335px auto 0 auto;
+    width:1024px;
+    height:80px;
+    pointer-events: auto;
+}
+ul#shortcut li {
+    display: inline-block;
+    position: relative;
+    list-style: none;
+    margin: 0 13px 0 13px;
+}
+ul#shortcut li a {
+    display: inline-block;
+    text-indent: -9999px;
+    text-decoration: none;
+    outline: none;
+    cursor: default;
+}
+
+ul#shortcut li#stadium { top: 5px; width: 122px; height: 65px; }
+ul#shortcut li#stadium a { top: 5px; width: 122px; height: 65px; background: url('../res/img/icon_stadium.png') no-repeat; }
+ul#shortcut li#stadium a:hover { background: url('../res/img/icon_stadium_i.png') no-repeat; }
+ul#shortcut li#stadium a:active{ background: url('../res/img/icon_stadium.png') no-repeat; }
+
+ul#shortcut li#news { width: 87px; height: 61px; }
+ul#shortcut li#news a { width: 87px; height: 61px; background: url('../res/img/icon_news.png') no-repeat; }
+ul#shortcut li#news a:hover { background: url('../res/img/icon_news_i.png') no-repeat; }
+ul#shortcut li#news a:active{ background: url('../res/img/icon_news.png') no-repeat; }
+
+ul#shortcut li#academy { width: 105px; height: 74px; }
+ul#shortcut li#academy a { width: 105px; height: 74px; background: url('../res/img/icon_academy.png') no-repeat; }
+ul#shortcut li#academy a:hover { background: url('../res/img/icon_academy_i.png') no-repeat; }
+ul#shortcut li#academy a:active{ background: url('../res/img/icon_academy.png') no-repeat; }
+
+ul#shortcut li#rehab { width: 83px; height: 64px; }
+ul#shortcut li#rehab a { width: 83px; height: 64px; background: url('../res/img/icon_rehab.png') no-repeat; }
+ul#shortcut li#rehab a:hover { background: url('../res/img/icon_rehab_i.png') no-repeat; }
+ul#shortcut li#rehab a:active{ background: url('../res/img/icon_rehab.png') no-repeat; }
+
+ul#shortcut li#admin { width: 97px; height: 67px; }
+ul#shortcut li#admin a { width: 97px; height: 67px; background: url('../res/img/icon_admin.png') no-repeat; }
+ul#shortcut li#admin a:hover { background: url('../res/img/icon_admin_i.png') no-repeat; }
+ul#shortcut li#admin a:active{ background: url('../res/img/icon_admin.png') no-repeat; }
+
+ul#shortcut li#train { width: 109px; height: 75px; }
+ul#shortcut li#train a { width: 109px; height: 75px; background: url('../res/img/icon_train.png') no-repeat; }
+ul#shortcut li#train a:hover { background: url('../res/img/icon_train_i.png') no-repeat; }
+ul#shortcut li#train a:active{ background: url('../res/img/icon_train.png') no-repeat; }
+
+ul#shortcut li#fame { top: 10px; width: 92px; height: 50px; }
+ul#shortcut li#fame a { top: 10px; width: 92px; height: 50px; background: url('../res/img/icon_fame.png') no-repeat; }
+ul#shortcut li#fame a:hover { background: url('../res/img/icon_fame_i.png') no-repeat; }
+ul#shortcut li#fame a:active{ background: url('../res/img/icon_fame.png') no-repeat; }
+
+ul#shortcut li#factory { width: 89px; height: 67px; }
+ul#shortcut li#factory a { width: 89px; height: 67px; background: url('../res/img/icon_factory.png') no-repeat; }
+ul#shortcut li#factory a:hover { background: url('../res/img/icon_factory_i.png') no-repeat; }
+ul#shortcut li#factory a:active{ background: url('../res/img/icon_factory.png') no-repeat; }
+
+header{
+    position:fixed;
+    top:0;
+    width:1024px;
+    left: 50%;
+    margin: 0 auto 0 -512px;
+    pointer-events: none;
+}
+.gr{
+    content:"";
+    display:table;
+    clear:both;
+}
+[class*='gc-'] { float: left; }
+.gc-1-16{ width:6.25%; }
+.gc-1-8{ width:12.5%; }
+.gc-1-4{ width:25%; }
+.gc-1-3{ width:33.33%; }
+.gc-1-2{ width:50%; }
+.gc-2-3{ width:66.67%; }
+
+div#managerBox{ margin:5px 5px 5px 5px; width:356px; height:127px; background: url('../res/img/manager_box.png') no-repeat; }
+div#managerBox a { 
+    display: inline-block;
+    text-indent: -9999px;
+    text-decoration: none;
+    outline: none;
+    cursor: default;
+    margin: 115px 0 0 0;
+    width: 356px; height: 12px;
+    background: url('../res/img/manager_box_button.png') no-repeat;
+}
+div#managerBox a:active { background: url('../res/img/manager_box_button.png') no-repeat; }
+div#managerBox a:hover { background: url('../res/img/manager_box_button.png') no-repeat; }
+div#golds{ margin:5px 5px 5px 5px; width:234px; height:72px; background: url('../res/img/money.png') no-repeat; }
+div#diamonds{ margin:5px 5px 5px 5px; width:234px; height:72px; background: url('../res/img/money_premium.png') no-repeat; }

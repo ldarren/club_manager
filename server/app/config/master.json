@@ -1,0 +1,23 @@
+{
+    "require":["base.json"],
+    "app":{
+        "name": "433Manager",
+        "env": "dev",
+        "elements": ["watchdog"]
+    },
+    "worker":{
+        "config": "config/worker",
+        "count":1
+    },
+    "lib":{
+        "redisAdmin":{
+            "mod":"redis",
+            "host":"localhost",
+            "port":6379,
+            "db":0,
+            "option":{},
+            "pub":"req",
+            "sub":"res"
+        }
+    }
+}

@@ -1,0 +1,94 @@
+<style>
+div#fixtures{
+    position:relative;
+    width: 720px;
+    margin:auto;
+}
+div#fixtures h2{
+    text-align:center;
+}
+div#fixtures select{
+    width: 100%;
+}
+textarea{
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 600px;
+    height: 500px;
+    border: 3px solid #cccccc;
+    padding: 5px;
+}
+</style>
+
+<div id=fixtures>
+<h2>433 Manager Fixtures</h2>
+<select name="schedule" size="5">
+</select>
+<button id=fixtures>Create Fixtures</button>
+<button id=kickoff style="display:none;">Kick off</button>
+</div>
+
+<div id=commentDlg class=modal>
+    <div style="width:600px;">
+    <a class=closeBtn href=#close>X</a>
+    <textarea></textarea>
+    </div>
+</div>
+
+<script name=scheduler>
+    this.use(G_SESSION.FIXTURES_DATA);
+    this.use(G_SESSION.MATCH_DATA);
+
+    var
+    me = this,
+    onLoad = function(){
+        var
+        selectEle = document.querySelector('div#fixtures select[name="schedule"]'),
+        btnCreate = document.querySelector('div#fixtures button#fixtures'),
+        btnKickOff = document.querySelector('div#fixtures button#kickoff');
+
+        btnCreate.addEventListener('click', function(evt){
+            me[G_SESSION.FIXTURES_DATA].create(function(err, data){
+                if (err) return console.error(err);
+
+                var
+                schedule = data['all'],
+                wk, teams, t1, t2;
+
+                for(var week=0,weekl=schedule.length; week<weekl; week++){
+                    wk = schedule[week];
+                    for(var day=0, dayl=wk.length; day<dayl; day++){
+                        teams = wk[day];
+                        t1 = teams[0];
+                        t2 = teams[1];
+                        selectEle.appendChild(new Option(''+(week+1)+'.'+(day+1)+') '+t1+':'+t2, t1+':'+t2));
+                    }
+                }
+                btnCreate.style.display = 'none';
+                btnKickOff.style.display = 'block';
+            });
+        });
+
+        btnKickOff.addEventListener('click', function(evt){
+            var
+            match = selectEle.options[selectEle.selectedIndex].value,
+            teams = match.split(':');
+
+            me[G_SESSION.MATCH_DATA].create(teams[0], teams[1], function(err, data){
+                if (err) return console.error(err);
+
+                var
+                textarea = document.querySelector('div#commentDlg textarea'),
+                result = data.result,
+                team1 = result[0],
+                team2 = result[1],
+                comment = data.comment;
+
+                textarea.innerHTML = team1.name+':'+team1.score+' - '+team2.name+':'+team2.score+'\n'+comment;
+                pico.changeHash('commentDlg');
+            });
+        });
+    };
+
+    this.slot(pico.LOAD, onLoad);
+</script>

@@ -1,0 +1,22 @@
+Object.freeze(G_CONST = {
+    JOBS: 'jobs',
+    LEAGUE: 'league',
+    TEAM: 'team',
+    FIXTURES: 'fixtures',
+    MATCH: 'match',
+}); 
+
+Object.freeze(G_API = {
+    LEAGUE_UPDATE: G_CONST.LEAGUE + G_CCONST.UPDATE,
+    TEAM_CREATE: G_CONST.TEAM + G_CCONST.CREATE,
+    FIXTURES_CREATE: G_CONST.FIXTURES + G_CCONST.CREATE,
+    MATCH_CREATE: G_CONST.MATCH + G_CCONST.CREATE,
+});     
+        
+Object.freeze(G_SESSION = {
+    JOBS: G_CONST.JOBS,
+    LEAGUE_DATA: G_CONST.LEAGUE,
+    TEAM_DATA: G_CONST.TEAM,
+    FIXTURES_DATA: G_CONST.FIXTURES,
+    MATCH_DATA: G_CONST.MATCH,
+});

@@ -1,0 +1,293 @@
+<style>
+
+.lgtOuter {
+    position:relative;
+    padding:4em 0 3em 0;
+    width:54em;
+    background:#eee;
+    margin:0 auto 3em auto;
+}
+.lgtInner {
+    overflow:auto;
+    width:54em;
+    height:9.6em;
+    background:#eee;
+}
+.lgtOuter table caption {
+    position:absolute;
+    width:51.7em;
+    text-align:center;
+    top:0;
+    left:0;
+    height:1.5em;
+    background:#697210;
+    border:0.1em solid #fff;
+    color:#fff;
+}
+.lgtOuter thead tr {
+    position:absolute;
+    top:1.5em;
+    height:1.5em;
+    left:0;
+}
+.lgtOuter tfoot td {
+    position:absolute;
+    width:51.5em;
+    text-align:center;
+    background:#f0c992; 
+    border:0.1em solid #000;
+    color:#000;
+    bottom:0;
+    left:0
+}
+.lgtOuter th, .lgtOuter td {
+    width:10em; 
+    text-align:left;
+}
+.lgtOuter th {
+    background:#724a10; 
+    color:#fff;
+}
+.lgtOuter .dk {background:#fff;}
+
+.tableone {width:650px; border-collapse:collapse; margin:0 auto;}
+.tabletwo {width:620px; border-collapse:collapse;}
+.th1 {width:149px;}
+.th2 {width:99px;}
+.th3 {width:99px;}
+.th4 {width:99px;}
+.th5 {width:200px;}
+
+.td1 {width:149px;}
+.td2 {width:99px;}
+.td3 {width:99px;}
+.td4 {width:99px;}
+.td5 {width:170px;}
+
+.tableone {background:#697210; border:1px solid #fff; color:#fff;}
+.tableone td {border:1px solid #fff; color:#fff;}
+.tableone tbody {background:#f0c992; color:#000;}
+.tableone caption {background:#fff; color:#697210; font-size:1.2em; margin:0 auto;}
+.tabletwo td {background:#eee; color:#000;}
+.tableone th, .tabletwo th {text-align:left;}
+.tabletwo tr.dk td {background:#ddd; color:#000;}
+
+.innerb {height:10em; overflow:auto;}
+
+</style>
+
+<div class=lgtOuter>
+<div class=lgtInner>
+<table class=table1 summary="433 Manager League Table">
+    <caption>433 Manager League Table</caption>
+    <thead>
+        <tr>
+        <th scope=col>Pos</th>
+        <th scope=col>Team</th>
+        <th scope=col>MP</th>
+        <th scope=col>W</th>
+        <th scope=col>D</th>
+        <th scope=col>L</th>
+        <th scope=col>GF</th>
+        <th scope=col>GA</th>
+        <th scope=col>GD</th>
+        <th scope=col>PT</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan=10>League Level 2</td>
+        </tr>
+    </tfoot>
+</table>
+<button id=createTeams>Create 14 New Teams</button>
+</div>
+</div>
+
+<div id=teamInfoDlg class=modal>
+    <div style="width:1100px;">
+    <a class=closeBtn href=#close>X</a>
+        <div class=lgtOuter style="width:1100px;">
+        <div class=lgtInner style="width:1100px;">
+        <table class=table1 style="width:1100px;" summary="Team Info Dialogbox">
+            <caption>Team Information</caption>
+            <thead>
+                <tr>
+                <th scope=col>name</th>
+                <th scope=col>nat</th>
+                <th scope=col>age</th>
+                <th scope=col>side</th>
+                <th scope=col>st</th>
+                <th scope=col>tk</th>
+                <th scope=col>ps</th>
+                <th scope=col>sh</th>
+                <th scope=col>stamina</th>
+                <th scope=col>ag</th>
+                <th scope=col>st_ab</th>
+                <th scope=col>tk_ab</th>
+                <th scope=col>ps_ab</th>
+                <th scope=col>sh_ab</th>
+                <th scope=col>games</th>
+                <th scope=col>saves</th>
+                <th scope=col>tackles</th>
+                <th scope=col>keypasses</th>
+                <th scope=col>shots</th>
+                <th scope=col>goals</th>
+                <th scope=col>assists</th>
+                <th scope=col>dp</th>
+                <th scope=col>injury</th>
+                <th scope=col>sus</th>
+                <th scope=col>fit</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan=26>Team Info</td>
+                </tr>
+            </tfoot>
+        </table>
+        </div>
+        </div>
+    </div>
+</div>
+
+<script templ=lgtTableRow>
+    <td scope=col>POS</td>
+    <td scope=col><a href=javascript:pico.getModule('leagueTable').viewTeam('TEAM')>TEAM</a></td>
+    <td scope=col>MP</td>
+    <td scope=col>W</td>
+    <td scope=col>D</td>
+    <td scope=col>L</td>
+    <td scope=col>GF</td>
+    <td scope=col>GA</td>
+    <td scope=col>GD</td>
+    <td scope=col>PT</td>
+</script>
+
+<script templ=lgtTeamRow>
+    <td scope=col>NAME</td>
+    <td scope=col>NAT</td>
+    <td scope=col>AGE</td>
+    <td scope=col>SIDE</td>
+    <td scope=col>ST</td>
+    <td scope=col>TK</td>
+    <td scope=col>PS</td>
+    <td scope=col>SH</td>
+    <td scope=col>STAMINA</td>
+    <td scope=col>AG</td>
+    <td scope=col>ST_AB</td>
+    <td scope=col>TK_AB</td>
+    <td scope=col>PS_AB</td>
+    <td scope=col>SH_AB</td>
+    <td scope=col>GAMES</td>
+    <td scope=col>SAVES</td>
+    <td scope=col>TACKLES</td>
+    <td scope=col>KEYPASSES</td>
+    <td scope=col>SHOTS</td>
+    <td scope=col>GOALS</td>
+    <td scope=col>ASSISTS</td>
+    <td scope=col>DP</td>
+    <td scope=col>INJURY</td>
+    <td scope=col>SUS</td>
+    <td scope=col>FIT</td>
+</script>
+
+<script name=leagueTable>
+    this.use(G_SESSION.LEAGUE_DATA);
+    this.use(G_SESSION.TEAM_DATA);
+
+    var
+    me = this,
+    createTeamBtn,
+    updateTable = function(err, league){
+        if (err) return console.error(err);
+
+        var
+        fixturesDiv = document.querySelector('div#fixtures'),
+        tbody = document.querySelector('table.table1 tbody'),
+        templRow = document.querySelector('script[templ="lgtTableRow"]').textContent,
+        tr, tds, team;
+
+        tbody.innerHTML = "";
+
+        for(var i=0,l=league.length; i<l; i++){
+            team = league[i];
+            tds = templRow
+                    .replace('POS',team[0])
+                    .replace(/TEAM/g,team[1])
+                    .replace('MP',team[2])
+                    .replace('W',team[3])
+                    .replace('D',team[4])
+                    .replace('L',team[5])
+                    .replace('GF',team[6])
+                    .replace('GA',team[7])
+                    .replace('GD',team[8])
+                    .replace('PT',team[9]);
+            tr = document.createElement('tr');
+            if (!(i%2)) tr.setAttribute('class', 'dk');
+            tr.innerHTML = tds;
+            tbody.appendChild(tr);
+        }
+        createTeamBtn.style.display = 'none';
+        fixturesDiv.style.display = 'block';
+    },
+    onLoad = function(){
+        createTeamBtn = document.querySelector('div.lgtInner button#createTeams');
+        createTeamBtn.addEventListener('click', function(evt){
+            me[G_SESSION.LEAGUE_DATA].create(updateTable);
+        });
+        me[G_SESSION.LEAGUE_DATA].slot('leagueupdate', updateTable);
+    };
+
+    this.viewTeam = function(teamName){
+        var
+        teams = me[G_SESSION.TEAM_DATA].get({name:teamName}),
+        players = teams[0].players,
+        tbody = document.querySelector('div#teamInfoDlg table.table1 tbody'),
+        templRow = document.querySelector('script[templ="lgtTeamRow"]').textContent,
+        tr, tds, player;
+
+        tbody.innerHTML = '';
+
+        for(var i=0,l=players.length; i<l; i++){
+            player = players[i];
+            tds = templRow
+                    .replace('NAME', player.name)
+                    .replace('NAT', player.nationality)
+                    .replace('AGE', player.age)
+                    .replace('SIDE', player.pref_side)
+                    .replace('ST', player.st)
+                    .replace('TK', player.tk)
+                    .replace('PS', player.ps)
+                    .replace('SH', player.sh)
+                    .replace('STAMINA', player.stamina)
+                    .replace('AG', player.ag)
+                    .replace('ST_AB', player.st_ab)
+                    .replace('TK_AB', player.tk_ab)
+                    .replace('PS_AB', player.ps_ab)
+                    .replace('SH_AB', player.sh_ab)
+                    .replace('GAMES', player.games)
+                    .replace('SAVES', player.saves)
+                    .replace('TACKLES', player.tackles)
+                    .replace('KEYPASSES', player.keypasses)
+                    .replace('SHOTS', player.shots)
+                    .replace('GOALS', player.goals)
+                    .replace('ASSISTS', player.assists)
+                    .replace('DP', player.dp)
+                    .replace('INJURY', player.injury)
+                    .replace('SUS', player.suspension)
+                    .replace('FIT', player.fitness);
+            tr = document.createElement('tr');
+            if (!(i%2)) tr.setAttribute('class', 'dk');
+            tr.innerHTML = tds;
+            tbody.appendChild(tr);
+        }
+
+        pico.changeHash('teamInfoDlg');
+    };
+    this.slot(pico.LOAD, onLoad);
+</script>
