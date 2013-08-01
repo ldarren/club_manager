@@ -119,24 +119,52 @@ pico.def(G_SESSION.MATCH_DATA, 'piDataModel', function(){
     };
 });
 
+pico.def(G_SESSION.USER_DATA, 'piDataModel', function(){
+    this.setup = function(){
+        this.init(this.moduleName, ['email']);
+    };
+});
+
+pico.def(G_SESSION.PLAYER_DATA, 'piDataModel', function(){
+    var
+    me = this,
+    userId;
+
+    me.use(G_SESSION.USER_DATA);
+
+    me.setup = function(){
+        var user = me[G_SESSION.USER_DATA];
+        me.init(me.moduleName, ['userId']);
+        user.slot('update', me, me.onUsersUpdated);
+        if (user.isValid()){
+            me.onUsersUpdated();
+        }
+    };
+    me.onUsersUpdated = function(){
+        var
+        userData = me[G_SESSION.USER_DATA],
+        users = userData.get('all', ['userId']),
+        user = users[0];
+        if (!user || !user.userId) return;
+
+        if (userId !== user.userId || !me.isValid()){
+            userId = user.userId;
+            me.request(G_CONST.INIT, {userId: userId});
+        }
+    };
+});
+
 pico.def('mgr433', function(){
     this.use(G_SESSION.LEAGUE_DATA);
     this.use(G_SESSION.TEAM_DATA);
     this.use(G_SESSION.FIXTURES_DATA);
     this.use(G_SESSION.MATCH_DATA);
+    this.use(G_SESSION.USER_DATA);
+    this.use(G_SESSION.PLAYER_DATA);
     this.use('piDataNet');
 
     var
     me = this,
-    loadView = function(views, i, cb){
-        if (i >= views.length) return cb();
-
-        var view = views[i];
-        pico.embed(view, view.getAttribute('src'), function(err){
-            if (err) console.error(err);
-            loadView(views, ++i, cb);
-        });
-    },
     onLoad = function(){
         me.piDataNet.init({
             pushURL: 'http://54.245.113.90:4000/push',
@@ -147,9 +175,9 @@ pico.def('mgr433', function(){
         me[G_SESSION.TEAM_DATA].setup();
         me[G_SESSION.FIXTURES_DATA].setup();
         me[G_SESSION.MATCH_DATA].setup();
-        loadView(document.querySelectorAll('div.view'), 0, function(){
-            console.log('done');
-        });
+        me[G_SESSION.USER_DATA].setup();
+        me[G_SESSION.PLAYER_DATA].setup();
+        pico.addFrame(document.body, 'div#page', 'views/pageLogin.html');
     };
 
     pico.slot(pico.LOAD, onLoad);

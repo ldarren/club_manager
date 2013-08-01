@@ -1,0 +1,130 @@
+<link rel=stylesheet href=../css/pageLogin.css />
+<link rel=stylesheet href=../css/modalLogin.css />
+
+<header>
+    <img src="../res/img/HEADER1.png" width="962" height="164"> 
+    <div class="panel"></div>
+    <div class="main">
+        <div class="main1"></div>
+        <div class="main2">
+            <p>433manger is an free to play online football management game for thousands of players across world. </p>
+            <p>&nbsp;</p>
+            <p>You will play as a new manager been employ by a new football club. You need to bring success to this new club by building the club facilities, hire staffs, trading of football players, deciding tactics and formation for matches.            </p>
+            <p>&nbsp;</p>
+            <p>You has to out smart and out play you opponents which are another aspiring managers in the other side of the computer.</p>
+            <p>&nbsp;</p>
+            <a href="#join_form" id="join_pop" class="button1">Register Now!</a></div>
+            <div class="main3">       
+                <p>&nbsp;</p>
+                <h3>Welcome Manager!</h3>
+                <p>&nbsp;</p>
+                <a href="#login_form" id="login_pop" class="button2">Manager Log In</a>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p class="redfont"><U> Forgot Password?</U></p>
+            </div>
+        </div>
+    </div>
+    </div>  
+</header>
+
+
+<!-- popup form #1 -->
+<a href="#x" class="overlay" id="login_form"></a>
+<div class="popup">
+    <h2>Welcome Manager!</h2>
+    <p>Please enter your login and password here</p>
+    <form action=readTeam method=POST>
+    <div><label for="login">Email</label><input type="email" id=login name="email" /></div>
+    <div><label for="pass">Password</label><input type="password" id=pass name="passw" /></div>
+    <input type="submit" value="Log In" />
+    </form>
+
+    <a class="close" href="#close"></a>
+</div>
+
+<!-- popup form #2 -->
+<a href="#x" class="overlay" id="join_form"></a>
+<div class="popup">
+    <h2>Register Now</h2>
+    <p>Please enter your details here</p>
+    <form action=createTeam method=POST>
+    <div><label for="email">Login (Email)</label><input type="email" id=email name=email /></div>
+    <div><label for="passw">Password</label><input type="password" id="passw" name=passw /></div>
+    <div><label for="name">Manager Name</label><input type="text" id="name" name=name /></div>
+    <div><label for="nat">Manager Country</label><select id="nat" name=nationality>
+    <option value=ar>Argentina</option>
+    <option value=au>Australia</option>
+    <option value=be>Belgium</option>
+    <option value=br>Brazil</option>
+    <option value=cn>China</option>
+    <option value=hk>Hong Kong</option>
+    <option value=ph>Philippines</option>
+    <option value=my>Malaysia</option>
+    <option value=mo>Macao</option>
+    <option value=sg>Singapore</option>
+    <option value=tw>Taiwan</option>
+    <option value=ae>United Arab Emirates</option>
+</select></div>
+    <div><label for="club">Team Name</label><input type="text" id="club" name=club  /></div>
+    <div><label for="stadium">Stadium Name</label><input type="text" id="stadium" name=stadium /></div>
+    <input type="submit" value="Sign Up" />
+    <form/>
+    <a class="close" href="#close"></a>
+</div>
+
+<script name=pageLogin>
+this.use(G_SESSION.USER_DATA);
+
+var
+me = this,
+logined = false,
+onSignin = function(evt){
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    var 
+    users = me[G_SESSION.USER_DATA],
+    obj = pico('form[action="readTeam"]').toObj();
+
+    if (!obj.email || !obj.passw) return alert('Not enough parameters');
+    users.request(G_CONST.READ, obj);
+    logined = true;
+
+    return false;
+},
+onSignup = function(evt){
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    var
+    users = me[G_SESSION.USER_DATA],
+    obj = pico('form[action="createTeam"]').toObj();
+
+    obj.ground = 'my';
+    if (!obj.email || !obj.passw || !obj.name || !obj.nationality || !obj.club || !obj.stadium) return alert('Not enough parameters');
+
+    users.request(G_CONST.CREATE, obj);
+    logined = true;
+
+    return false;
+},
+onUsersUpdate = function(){
+    var users = me[G_SESSION.USER_DATA];
+    if (users.isValid() && logined){
+        pico.changeUIState('close');
+        pico.changeFrame(document.body, 'div#page', 'views/pageGame.html', {opacity:[0,1,'1s']});
+    }
+},
+onLoad = function(evt){
+    var form = document.querySelector('form[action="createTeam"]');
+    form.addEventListener('submit', onSignup, false);
+    form = document.querySelector('form[action="readTeam"]');
+    form.addEventListener('submit', onSignin, false);
+
+    me[G_SESSION.USER_DATA].slot('update', onUsersUpdate);
+};
+
+this.slot('load', onLoad);
+</script>

@@ -4,6 +4,8 @@ Object.freeze(G_CONST = {
     TEAM: 'team',
     FIXTURES: 'fixtures',
     MATCH: 'match',
+    USER: 'user',
+    PLAYER: 'player',
 }); 
 
 Object.freeze(G_API = {
@@ -19,4 +21,6 @@ Object.freeze(G_SESSION = {
     TEAM_DATA: G_CONST.TEAM,
     FIXTURES_DATA: G_CONST.FIXTURES,
     MATCH_DATA: G_CONST.MATCH,
+    USER_DATA: G_CONST.USER,
+    PLAYER_DATA: G_CONST.PLAYER,
 });
