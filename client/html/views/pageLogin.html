@@ -89,7 +89,7 @@ onSignin = function(evt){
     obj = pico('form[action="readTeam"]').toObj();
 
     if (!obj.email || !obj.passw) return alert('Not enough parameters');
-    users.request(G_CONST.READ, obj);
+    users.request(G_CCONST.READ, obj);
     logined = true;
 
     return false;
@@ -105,7 +105,7 @@ onSignup = function(evt){
     obj.ground = 'my';
     if (!obj.email || !obj.passw || !obj.name || !obj.nationality || !obj.club || !obj.stadium) return alert('Not enough parameters');
 
-    users.request(G_CONST.CREATE, obj);
+    users.request(G_CCONST.CREATE, obj);
     logined = true;
 
     return false;
