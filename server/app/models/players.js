@@ -37,7 +37,7 @@ exports.createTeamMembers = function(session, order, teamSize, baseStat, focusSt
     session.addJob(
         G_CCONST.CREATE,
         api,
-        order[G_CONST.REQ_ID],
+        order.reqId,
         sqlPlayers,
         sqlPlayers.save,
         G_PICO_WEB.RENDER_FULL,
@@ -69,8 +69,8 @@ exports.loadTeamMembers = function(session, order, cb){
 
         session.addJob(
             G_CCONST.READ,
-            order[G_CONST.API],
-            order[G_CONST.REQ_ID],
+            order.api,
+            order.reqId,
             undefined,
             undefined,
             G_PICO_WEB.RENDER_FULL,

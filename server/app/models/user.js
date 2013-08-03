@@ -71,7 +71,7 @@ exports.loadTeamByEmail = function(session, order, cb){
     var
     data = order.data,
     email = data[G_CONST.EMAIL];
-
+console.log('**************', email, G_CONST.EMAIL, JSON.stringify(data));
     if (!email) return cb('invalid params');
     sqlUser.getByEmail(email, function(err, results){
         if (err) return cb(err);
