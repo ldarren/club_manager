@@ -7,7 +7,7 @@ MODEL_ID = G_SESSION.PLAYERS;
 
 exports.createTeamMembers = function(session, order, teamSize, baseStat, focusStat, minAge, cb){
     var
-    api = order[G_CONST.API],
+    api = order.api,
     args = G_ARGS[api],
     members = [],
     stat, inc, currStat, currStatValue, availPt, ageRange, name;
@@ -34,14 +34,13 @@ exports.createTeamMembers = function(session, order, teamSize, baseStat, focusSt
     model[G_CONST.PLAYERS] = members;
 
     session.addJob(
-        G_CONST.CREATE,
+        G_CCONST.CREATE,
         api,
         order[G_CONST.REQ_ID],
         sqlPlayers,
         sqlPlayers.save,
-        true,
-        [MODEL_ID, G_SESSION.USERS],
-        [G_CONST.PLAYERS, G_CONST.USER_ID]
+        G_PICO_WEB.RENDER_FULL,
+        [[{modelId:MODEL_ID, key:userId},{modelId:G_SESSION.USER, key:userId}]]
     );
 
     cb();
@@ -68,15 +67,13 @@ exports.loadTeamMembers = function(session, order, cb){
         model[G_CONST.PLAYERS] = members;
 
         session.addJob(
-            G_CONST.READ,
+            G_CCONST.READ,
             order[G_CONST.API],
             order[G_CONST.REQ_ID],
             undefined,
             undefined,
-            true,
-            [MODEL_ID],
-            [G_CONST.USER_ID, G_CONST.PLAYERS],
-            undefined
+            G_PICO_WEB.RENDER_FULL,
+            [[{modelId:MODEL_ID, key:userId},{modelId:G_SESSION.USER, key:userId}]]
         );
 
         cb();

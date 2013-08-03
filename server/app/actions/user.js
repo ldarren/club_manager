@@ -1,6 +1,5 @@
 exports.setup = function(context, next){
     var web = context.webServer;
-
     web.route(G_API.USER_CREATE, [setTeamInfo]);
     web.route(G_API.TEAM_INIT, [getTeamInfo, setTeamMembers]);
     web.route(G_API.USER_READ, [getTeamInfoByEmail, getTeamMembers]);

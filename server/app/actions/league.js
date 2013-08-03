@@ -116,4 +116,6 @@ exports.setup = function(context, next){
     web.route(G_API.TEAM_CREATE, [createTeam]);
     web.route(G_API.FIXTURES_CREATE, [createFixtures]);
     web.route(G_API.MATCH_CREATE, [createMatch]);
+
+    next();
 };
