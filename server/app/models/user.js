@@ -3,20 +3,16 @@ redisUser = require('./redis/user'),
 sqlUser = require('./sql/user');
 
 const
-MODEL_ID = G_SESSION.USER;
+MODEL_ID = G_SESSION.USER_DATA;
 
 exports.create = function(session, order, cb){
     var
     model = session.getModel(MODEL_ID),
     data = order.data,
     api = order.api,
-    args = G_ARGS[api],
-    userId = data[G_CONST.USER_ID],
-    userInfo = model[userId],
-    arg;
+    email = data[G_CONST.EMAIL];
 
-    if (userInfo) return cb('already own a team');
-    userInfo = {};
+    if (model[email]) return cb('already own a team');
 
     if (
         !data[G_CONST.MANAGER_NAME] || 
@@ -25,12 +21,8 @@ exports.create = function(session, order, cb){
         !data[G_CONST.CLUB_GROUND]
         )
         return cb('Not enough parameter');
-
-    for(var i=0, l=args.length; i<l; i++){
-        arg = args[i];
-        userInfo[arg] = data[arg];
-    }
-    model[userId] = userInfo;
+    
+    model[email] = data;
 
     session.addJob(
         G_CCONST.CREATE,
@@ -39,7 +31,7 @@ exports.create = function(session, order, cb){
         sqlUser,
         sqlUser.save,
         G_PICO_WEB.RENDER_FULL,
-        [[model:MODEL_ID, key:userId]],
+        [[{model:MODEL_ID, key:email}]],
         G_CONST.USER_ID
     );
 
@@ -48,7 +40,7 @@ exports.create = function(session, order, cb){
 
 exports.loadTeam = function(session, order, cb){
     var
-    data = order[G_CONST.DATA],
+    data = order.data,
     userId = parseInt(data[G_CONST.USER_ID]);
 
     if (!userId) return cb('invalid params');
@@ -57,10 +49,10 @@ exports.loadTeam = function(session, order, cb){
         if (err) return cb(err);
         var
         result = results[0],
-        model = session.getModel(MODEL_ID),
-        userId = result[G_CONST.USER_ID];
+        model = session.getModel(MODEL_ID);
+        email = result[G_CONST.EMAIL];
         
-        model[userId] = result;
+        model[email] = result;
 
         session.addJob(
             G_CCONST.READ,
@@ -69,7 +61,7 @@ exports.loadTeam = function(session, order, cb){
             undefined,
             undefined,
             G_PICO_WEB.RENDER_NO,
-            [[{modelId:MODEL_ID, key:userId}]]
+            [[{modelId:MODEL_ID, key:email}]]
         );
         cb();
     });
@@ -82,26 +74,25 @@ exports.loadTeamByEmail = function(session, order, cb){
 
     if (!email) return cb('invalid params');
     sqlUser.getByEmail(email, function(err, results){
-console.log('err', err, results);
         if (err) return cb(err);
         if (!results.length) return cb('email not found:'+email);
         var
         userInfo = results[0],
-        userId = userInfo[G_CONST.USER_ID],
+        email = userInfo[G_CONST.EMAIL],
         model = session.getModel(MODEL_ID);
 
-        model[userId] = userInfo;
+        model[email] = userInfo;
 
-        order.data[G_CONST.USER_ID] = userId;
+        data[G_CONST.USER_ID] = userInfo[G_CONST.USER_ID];
 
         session.addJob(
-            G_CONST.READ,
-            order[G_CONST.API],
-            order[G_CONST.REQ_ID],
+            G_CCONST.READ,
+            order.api,
+            order.reqId,
             undefined,
             undefined,
             G_PICO_WEB.RENDER_FULL,
-            [[{modeId:MODEL_ID, key:userId}]]
+            [[{modeId:MODEL_ID, key:email}]]
         );
         cb();
     });

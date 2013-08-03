@@ -7,9 +7,7 @@ Object.freeze(G_CONST = {
     USER: 'user',
     PLAYERS: 'players',
 
-    API: 'api',
     CLUB_NAME: 'club',
-    DATA: 'data',
     EMAIL: 'email',
     FUNCTION: 'func',
     CLUB_GROUND: 'ground',

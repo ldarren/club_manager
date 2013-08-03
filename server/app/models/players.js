@@ -3,12 +3,14 @@ memNames = require('../models/mem/names'),
 sqlPlayers = require('./sql/players');
 
 const
-MODEL_ID = G_SESSION.PLAYERS;
+MODEL_ID = G_SESSION.PLAYER_DATA;
 
 exports.createTeamMembers = function(session, order, teamSize, baseStat, focusStat, minAge, cb){
     var
     api = order.api,
-    args = G_ARGS[api],
+    userModel = session.getModel(G_SESSION.USER),
+    email = userModel[G_CONST.EMAIL],
+    model = session.getModel(MODEL_ID),
     members = [],
     stat, inc, currStat, currStatValue, availPt, ageRange, name;
 
@@ -30,8 +32,7 @@ exports.createTeamMembers = function(session, order, teamSize, baseStat, focusSt
         members.push({fn:name[0], mn:name[1], ln:name[2], xp:0, level:1, age: minAge + ageRange, stat: stat, inc: inc});
     }
 
-    var model = session.getModel(MODEL_ID);
-    model[G_CONST.PLAYERS] = members;
+    model[email] = members;
 
     session.addJob(
         G_CCONST.CREATE,
@@ -40,7 +41,7 @@ exports.createTeamMembers = function(session, order, teamSize, baseStat, focusSt
         sqlPlayers,
         sqlPlayers.save,
         G_PICO_WEB.RENDER_FULL,
-        [[{modelId:MODEL_ID, key:userId},{modelId:G_SESSION.USER, key:userId}]]
+        [[{modelId:MODEL_ID, key:email},{modelId:G_SESSION.USER, key:email}]]
     );
 
     cb();
@@ -48,10 +49,11 @@ exports.createTeamMembers = function(session, order, teamSize, baseStat, focusSt
 
 exports.loadTeamMembers = function(session, order, cb){
     var
-    data = order[G_CONST.DATA],
+    data = order.data
     userId = parseInt(data[G_CONST.USER_ID]);
 
     if (!userId) return cb('invalid params');
+
     sqlPlayers.getByUserId(userId, function(err, results){
         if (err) return cb(err);
         var
@@ -63,8 +65,7 @@ exports.loadTeamMembers = function(session, order, cb){
             r = results[i];
             members.push({fn:r.firstName, mn:r.middleName, ln:r.lastName, xp:r.xp, level:r.level, age: r.age, stat: JSON.parse(r.stat), inc: JSON.parse(r.inc)});
         }
-        model[G_CONST.USER_ID] = userId;
-        model[G_CONST.PLAYERS] = members;
+        model[userId] = members;
 
         session.addJob(
             G_CCONST.READ,
@@ -73,7 +74,7 @@ exports.loadTeamMembers = function(session, order, cb){
             undefined,
             undefined,
             G_PICO_WEB.RENDER_FULL,
-            [[{modelId:MODEL_ID, key:userId},{modelId:G_SESSION.USER, key:userId}]]
+            [[{modelId:MODEL_ID, key:userId}]]
         );
 
         cb();
