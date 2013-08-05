@@ -128,29 +128,29 @@ pico.def(G_SESSION.USER_DATA, 'piDataModel', function(){
 pico.def(G_SESSION.PLAYER_DATA, 'piDataModel', function(){
     var
     me = this,
-    userId;
-
-    me.use(G_SESSION.USER_DATA);
-
-    me.setup = function(){
-        var user = me[G_SESSION.USER_DATA];
-        me.init(me.moduleName, ['userId']);
-        user.slot('update', me, me.onUsersUpdated);
-        if (user.isValid()){
-            me.onUsersUpdated();
-        }
-    };
-    me.onUsersUpdated = function(){
+    userId,
+    onUsersUpdated = function(){
         var
         userData = me[G_SESSION.USER_DATA],
-        users = userData.get('all', ['userId']),
+        users = userData.get('all', ['email']),
         user = users[0];
         if (!user || !user.userId) return;
 
         if (userId !== user.userId || !me.isValid()){
             userId = user.userId;
-            me.request(G_CONST.INIT, {userId: userId});
+            me.request(G_CCONST.INIT, {userId: userId});
         }
+    };
+
+    me.use(G_SESSION.USER_DATA);
+
+    me.setup = function(){
+        var userData = me[G_SESSION.USER_DATA];
+        me.init(me.moduleName, ['userId']);
+/*        userData.slot('update', onUsersUpdated);
+        if (userData.isValid()){
+            onUsersUpdated();
+        }*/
     };
 });
 
