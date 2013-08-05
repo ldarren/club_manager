@@ -31,7 +31,7 @@ exports.create = function(session, order, cb){
         sqlUser,
         sqlUser.save,
         G_PICO_WEB.RENDER_FULL,
-        [[{model:MODEL_ID, key:email}]],
+        [[{modelId:MODEL_ID, key:email}]],
         G_CONST.USER_ID
     );
 
@@ -71,7 +71,6 @@ exports.loadTeamByEmail = function(session, order, cb){
     var
     data = order.data,
     email = data[G_CONST.EMAIL];
-console.log('**************', email, G_CONST.EMAIL, JSON.stringify(data));
     if (!email) return cb('invalid params');
     sqlUser.getByEmail(email, function(err, results){
         if (err) return cb(err);

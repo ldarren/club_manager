@@ -121,43 +121,43 @@ ul#shortcut li a {
 
 ul#shortcut li#stadium { top: 5px; width: 122px; height: 65px; }
 ul#shortcut li#stadium a { top: 5px; width: 122px; height: 65px; background: url('../res/img/icon_stadium.png') no-repeat; }
-ul#shortcut li#stadium a:hover { background: url('../res/img/icon_stadium_i.png') no-repeat; }
-ul#shortcut li#stadium a:active{ background: url('../res/img/icon_stadium.png') no-repeat; }
+ul#shortcut li#stadium a:hover { background: url('../res/img/icon_stadium_o.png') no-repeat; }
+ul#shortcut li#stadium a:active{ background: url('../res/img/icon_stadium_d.png') no-repeat; }
 
 ul#shortcut li#news { width: 87px; height: 61px; }
 ul#shortcut li#news a { width: 87px; height: 61px; background: url('../res/img/icon_news.png') no-repeat; }
-ul#shortcut li#news a:hover { background: url('../res/img/icon_news_i.png') no-repeat; }
-ul#shortcut li#news a:active{ background: url('../res/img/icon_news.png') no-repeat; }
+ul#shortcut li#news a:hover { background: url('../res/img/icon_news_o.png') no-repeat; }
+ul#shortcut li#news a:active{ background: url('../res/img/icon_news_d.png') no-repeat; }
 
 ul#shortcut li#academy { width: 105px; height: 74px; }
 ul#shortcut li#academy a { width: 105px; height: 74px; background: url('../res/img/icon_academy.png') no-repeat; }
-ul#shortcut li#academy a:hover { background: url('../res/img/icon_academy_i.png') no-repeat; }
-ul#shortcut li#academy a:active{ background: url('../res/img/icon_academy.png') no-repeat; }
+ul#shortcut li#academy a:hover { background: url('../res/img/icon_academy_o.png') no-repeat; }
+ul#shortcut li#academy a:active{ background: url('../res/img/icon_academy_d.png') no-repeat; }
 
 ul#shortcut li#rehab { width: 83px; height: 64px; }
 ul#shortcut li#rehab a { width: 83px; height: 64px; background: url('../res/img/icon_rehab.png') no-repeat; }
-ul#shortcut li#rehab a:hover { background: url('../res/img/icon_rehab_i.png') no-repeat; }
-ul#shortcut li#rehab a:active{ background: url('../res/img/icon_rehab.png') no-repeat; }
+ul#shortcut li#rehab a:hover { background: url('../res/img/icon_rehab_o.png') no-repeat; }
+ul#shortcut li#rehab a:active{ background: url('../res/img/icon_rehab_d.png') no-repeat; }
 
 ul#shortcut li#admin { width: 97px; height: 67px; }
 ul#shortcut li#admin a { width: 97px; height: 67px; background: url('../res/img/icon_admin.png') no-repeat; }
-ul#shortcut li#admin a:hover { background: url('../res/img/icon_admin_i.png') no-repeat; }
-ul#shortcut li#admin a:active{ background: url('../res/img/icon_admin.png') no-repeat; }
+ul#shortcut li#admin a:hover { background: url('../res/img/icon_admin_o.png') no-repeat; }
+ul#shortcut li#admin a:active{ background: url('../res/img/icon_admin_d.png') no-repeat; }
 
 ul#shortcut li#train { width: 109px; height: 75px; }
 ul#shortcut li#train a { width: 109px; height: 75px; background: url('../res/img/icon_train.png') no-repeat; }
-ul#shortcut li#train a:hover { background: url('../res/img/icon_train_i.png') no-repeat; }
-ul#shortcut li#train a:active{ background: url('../res/img/icon_train.png') no-repeat; }
+ul#shortcut li#train a:hover { background: url('../res/img/icon_train_o.png') no-repeat; }
+ul#shortcut li#train a:active{ background: url('../res/img/icon_train_d.png') no-repeat; }
 
 ul#shortcut li#fame { top: 10px; width: 92px; height: 50px; }
 ul#shortcut li#fame a { top: 10px; width: 92px; height: 50px; background: url('../res/img/icon_fame.png') no-repeat; }
-ul#shortcut li#fame a:hover { background: url('../res/img/icon_fame_i.png') no-repeat; }
-ul#shortcut li#fame a:active{ background: url('../res/img/icon_fame.png') no-repeat; }
+ul#shortcut li#fame a:hover { background: url('../res/img/icon_fame_o.png') no-repeat; }
+ul#shortcut li#fame a:active{ background: url('../res/img/icon_fame_d.png') no-repeat; }
 
 ul#shortcut li#factory { width: 89px; height: 67px; }
 ul#shortcut li#factory a { width: 89px; height: 67px; background: url('../res/img/icon_factory.png') no-repeat; }
-ul#shortcut li#factory a:hover { background: url('../res/img/icon_factory_i.png') no-repeat; }
-ul#shortcut li#factory a:active{ background: url('../res/img/icon_factory.png') no-repeat; }
+ul#shortcut li#factory a:hover { background: url('../res/img/icon_factory_o.png') no-repeat; }
+ul#shortcut li#factory a:active{ background: url('../res/img/icon_factory_d.png') no-repeat; }
 
 header{
     position:fixed;
