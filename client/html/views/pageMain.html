@@ -1,11 +1,15 @@
 <link rel=stylesheet href=../css/main.css />
 <link rel=stylesheet href=../css/dialog.css />
+<style>
+div#managerBox p{padding:5px 5px 5px 20px;}
+div#managerBox p span{display:block;font: bold italic large serif;}
+div#golds span{padding:100px 5px 30px 80px;font: bold italic large serif;}
+div#diamonds span{padding:100px 5px 30px 80px;font: bold italic large serif;}
+</style>
 
 <header class=gr>
 <div class=gc-1-2>
-<div id=managerBox>
-<a href=#managerBoxMenu>Manager Box Menu</a>
-</div></div>
+<div id=managerBox></div></div>
 <div class=gc-1-4><div id=golds></div></div>
 <div class=gc-1-4><div id=diamonds></div></div>
 </header>
@@ -37,16 +41,43 @@
 </footer>
 
 <script type=text/templ templ=managerInfo>
+<p id=managerInfo>
+<span>Name: NAME</span>
+<span>Nationality: NAT</span>
+<span>Club: CLUB</span>
+<span>Ground: GROUND</span>
+<span>Stadium: STADIUM</span>
+</p>
+<a href=#managerBoxMenu>Manager Box Menu</a>
 </script>
-<script type=text/templ templ=goldInfo>
-</script>
-<script type=text/templ templ=diamondInfo>
-</script>
+<script type=text/templ templ=goldInfo><span>GOLD</span></script>
+<script type=text/templ templ=diamondInfo><span>DIAMOND</span></script>
 
 <script name=managerInfo>
-var me = this;
+var
+me = this,
+managerInfoCont = document.querySelector('div#managerBox'),
+managerInfoTempl = document.querySelector('script[templ=managerInfo]').textContent,
+goldCont = document.querySelector('div#golds'),
+goldTempl = document.querySelector('script[templ=goldInfo]').textContent,
+diamondCont = document.querySelector('div#diamonds'),
+diamondTempl = document.querySelector('script[templ=diamondInfo]').textContent;
 
 var onLoad = function(){
+    debugger;
+    var
+    userData = me[G_SESSION.USER_DATA],
+    user = userData.getMe();
+
+    managerInfoCont.innerHTML = managerInfoTempl
+        .replace('NAME', user.name)
+        .replace('NAT', user.nationality)
+        .replace('CLUB', user.club)
+        .replace('GROUND', user.ground)
+        .replace('STADIUM', user.stadium);
+
+    goldCont.innerHTML = goldTempl.replace('GOLD', 0);
+    diamondCont.innerHTML = diamondTempl.replace('DIAMOND', 0);
 };
 
 me.use(G_SESSION.USER_DATA);
