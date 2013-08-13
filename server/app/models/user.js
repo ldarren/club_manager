@@ -1,6 +1,8 @@
 var
 redisUser = require('./redis/user'),
-sqlUser = require('./sql/user');
+sqlUser = require('./sql/user'),
+sqlPlayers = require('./sql/players'),
+memEsms = require('./mem/esms');
 
 const
 MODEL_ID = G_SESSION.USER_DATA;
@@ -25,7 +27,6 @@ exports.create = function(session, order, cb){
     model[email] = data;
 
     session.addJob(
-        G_CCONST.CREATE,
         api,
         order.reqId,
         sqlUser,
@@ -33,6 +34,17 @@ exports.create = function(session, order, cb){
         G_PICO_WEB.RENDER_FULL,
         [[{modelId:MODEL_ID, key:email}]],
         G_CONST.USER_ID
+    );
+
+    data[G_CONST.TEAM] = memEsms.rosterCreator();
+
+    session.addJob(
+        api,
+        order.reqId,
+        sqlPlayers,
+        sqlPlayers.save,
+        G_PICO_WEB.RENDER_NO,
+        [[{modelId:MODEL_ID, key:email}]]
     );
 
     cb();
@@ -55,7 +67,6 @@ exports.loadTeam = function(session, order, cb){
         model[email] = result;
 
         session.addJob(
-            G_CCONST.READ,
             order.api,
             order.reqId,
             undefined,
@@ -85,13 +96,12 @@ exports.loadTeamByEmail = function(session, order, cb){
         data[G_CONST.USER_ID] = userInfo[G_CONST.USER_ID];
 
         session.addJob(
-            G_CCONST.READ,
             order.api,
             order.reqId,
             undefined,
             undefined,
             G_PICO_WEB.RENDER_FULL,
-            [[{modeId:MODEL_ID, key:email}]]
+            [[{modelId:MODEL_ID, key:email}]]
         );
         cb();
     });

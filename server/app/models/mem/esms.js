@@ -30,27 +30,27 @@ module.exports = {
     setup: function(context, next){
         next();
     },
-    rosterCreator = function(config){
+    rosterCreator: function(config){
         if (!config){
-            rosterOpt.RANDOM_SEED: Date.now();
+            rosterOpt.RANDOM_SEED = Date.now();
             config = rosterOpt;
         }
         return rosterCreator(config);
     },
-    fixtures = function(teamNames){
+    fixtures: function(teamNames){
         return fixtures(teamNames);
     },
-    tsc = function(teamName, plan, roster){
+    tsc: function(teamName, plan, roster){
         return tsc(teamName, plan, roster, leagueDat);
     },
-    esme = function(teamSheet1, teamSheet2, roster1, roster2){
+    esme: function(teamSheet1, teamSheet2, roster1, roster2){
         return esms(esmsOpt, leagueDat, leagueAbilities, languageDat, tacticsDat, teamSheet1, teamSheet2, roster1, roster2);
     },
-    updtr = function(report, league, roster1, roster2){
+    updtr: function(report, league, roster1, roster2){
         return updtr(updtrOpt, leagueDat, report.teamInfo, report.teamStatistics, league, roster1, roster2);
     },
-}
-
+};
+/*
 function createMatch(session, order, next){
     var
     model = session.getModel(MODEL_MATCH),
@@ -137,3 +137,4 @@ function createFixtures(session, order, next){
 
     next();
 }
+*/
