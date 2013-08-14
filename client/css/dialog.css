@@ -1,4 +1,4 @@
-div.modal{
+div.uiModalDlg{
     position:fixed;
     font-family: Arial, Helvetica, san-serif;
     top: 0;
@@ -11,11 +11,11 @@ div.modal{
     -webkit-transition: opacity 400ms ease-in;
     pointer-events: none;
 }
-div.modal:target{
+div.uiModalDlg:target{
     opacity:1;
     pointer-events: auto;
 }
-div.modal > div {
+div.uiModalDlg div:nth-child(1) {
     width: 400px;
     position: relative;
     margin: 10% auto;
@@ -24,21 +24,21 @@ div.modal > div {
     background: #fff;
     background: -webkit-linear-gradient(#fff, #999);
 }
-div.modal a.closeBtn{
+div.uiModalDlg a.closeBtn{
     background: #606061;
     color: #FFFFFF;
     line-height: 25px;
     position: absolute;
     right: -12px;
-    text-align: center;
     top: -10px;
     width: 24px;
+    text-align: center;
     text-decoration: none;
     font-weight: bold;
     border-radius: 12px;
     box-shadow: 1px 1px 3px #000;
 }
-div.modal a.closeBtn:hover { background: #00d9ff; }
+div.uiModalDlg a.closeBtn:hover { background: #00d9ff; }
 
 table.zebra{
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
