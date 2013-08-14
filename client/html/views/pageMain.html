@@ -21,7 +21,7 @@ div#diamonds span{padding:100px 5px 30px 80px;font: bold italic large serif;}
 <li id=academy><a href=#academy title="Academy Center">Academy Center</a></li>
 <li id=rehab><a href=#rehab title="Rehab Center">Rehab Center</a></li>
 <li id=admin><a href=#admin title="Admin Office">Admin Office</a></li>
-<li id=train><a href=#train title="Training Ground">Training Ground</a></li>
+<li id=train><a href=#trainDlg title="Training Ground">Training Ground</a></li>
 <li id=fame><a href=#fame title="Hall of Fame">Hall of Fame</a></li>
 <li id=factory><a href=#factory title="Gear Factory">Gear Factory</a></li>
 </ul>
@@ -34,11 +34,14 @@ div#diamonds span{padding:100px 5px 30px 80px;font: bold italic large serif;}
 <li id=academy><a href=#academy title="Academy Center">Academy Center</a></li>
 <li id=rehab><a href=#rehab title="Rehab Center">Rehab Center</a></li>
 <li id=admin><a href=#admin title="Admin Office">Admin Office</a></li>
-<li id=train><a href=#train title="Training Ground">Training Ground</a></li>
+<li id=train><a href=#trainDlg title="Training Ground">Training Ground</a></li>
 <li id=fame><a href=#fame title="Hall of Fame">Hall of Fame</a></li>
 <li id=factory><a href=#factory title="Gear Factory">Gear Factory</a></li>
 </ul>
 </footer>
+
+<div id=dialogs>
+</div>
 
 <script type=text/templ templ=managerInfo>
 <p id=managerInfo>
@@ -64,8 +67,9 @@ diamondCont = document.querySelector('div#diamonds'),
 diamondTempl = document.querySelector('script[templ=diamondInfo]').textContent;
 
 var onLoad = function(){
-    debugger;
     var
+    dialogs = document.querySelector('div#dialogs'),
+    trainDlg = document.createElement('div'),
     userData = me[G_SESSION.USER_DATA],
     user = userData.getMe();
 
@@ -78,6 +82,9 @@ var onLoad = function(){
 
     goldCont.innerHTML = goldTempl.replace('GOLD', 0);
     diamondCont.innerHTML = diamondTempl.replace('DIAMOND', 0);
+
+    dialogs.appendChild(trainDlg);
+    pico.embed(trainDlg, 'views/trainDlg.html');
 };
 
 me.use(G_SESSION.USER_DATA);
