@@ -6,7 +6,57 @@
         <a class=closeBtn href=#close>X</a>
     </header>
     <main>
-        
+        <ul class=uiTabs>
+        <li><a href=#>England</a></li>
+        <li><a href=#>Italy</a></li>
+        <li><a href=#>Spain</a></li>
+        </ul>
     </main>
     </div>
 </div>
+
+<script name=trainDlg>
+    var
+    me = this,
+    activeTab,
+    onChangePage = function(evt){
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        var a = evt.target;
+        if (a !== activeTab){
+            activeTab.id = '';
+            a.id = 'current';
+            activeTab = a;
+            switch(a.textContent){
+                case 'England':
+                    break;
+                case 'Italy':
+                    break;
+                case 'Spain':
+                    break;
+            }
+        }
+
+        return false;
+    },
+    onLoad = function(){
+        debugger;
+        var
+        ul = document.querySelector('ul.uiTabs'),
+        lis = ul.children,
+        li, a;
+
+        for(var i=0,l=lis.length; i<l; i++){
+            li = lis[i];
+            a = li.querySelector('a');
+            a.addEventListener('click', onChangePage, false);
+            if (0 === i){
+                a.id = 'current';
+                activeTab = a;
+            }
+        }
+    };
+
+    me.slot(pico.LOAD, onLoad);
+</script>

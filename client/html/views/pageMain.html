@@ -45,11 +45,11 @@ div#diamonds span{padding:100px 5px 30px 80px;font: bold italic large serif;line
 
 <script type=text/templ templ=managerInfo>
 <p id=managerInfo>
-<span>Name: NAME</span>
-<span>Nationality: NAT</span>
-<span>Club: CLUB</span>
-<span>Ground: GROUND</span>
-<span>Stadium: STADIUM</span>
+<span>Manager Name: NAME</span>
+<span>Manager Nationality: NAT</span>
+<span>Club Name: CLUB</span>
+<span>Club Base: GROUND</span>
+<span>Stadium Name: STADIUM</span>
 </p>
 <a href=#managerBoxMenu>Manager Box Menu</a>
 </script>
@@ -93,7 +93,7 @@ var onLoad = function(){
     pico.embed(trainDlg, 'views/dlgTrain.html');
     pico.embed(stadiumDlg, 'views/dlgStadium.html');
     pico.embed(fameDlg, 'views/dlgFame.html');
-    pico.embed(fameDlg, 'views/dlgPlayer.html');
+    pico.embed(playerDlg, 'views/dlgPlayer.html');
 };
 
 me.use(G_SESSION.USER_DATA);
