@@ -88,7 +88,7 @@ ul#gameMenu li#factory a { width: 335px; height: 273px; background: url('../res/
 ul#gameMenu li#factory a:hover { background: url('../res/img/factory_o.png') no-repeat; }
 ul#gameMenu li#factory a:active{ background: url('../res/img/factory_d.png') no-repeat; }
 
-footer{
+footer.game{
     position:fixed;
     bottom:0;
     width:100%;
@@ -159,7 +159,7 @@ ul#shortcut li#factory a { width: 89px; height: 67px; background: url('../res/im
 ul#shortcut li#factory a:hover { background: url('../res/img/icon_factory_o.png') no-repeat; }
 ul#shortcut li#factory a:active{ background: url('../res/img/icon_factory_d.png') no-repeat; }
 
-header{
+header.game{
     position:fixed;
     top:0;
     width:1024px;

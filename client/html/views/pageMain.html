@@ -3,39 +3,39 @@
 <style>
 div#managerBox p{padding:5px 5px 5px 20px;}
 div#managerBox p span{display:block;font: bold italic large serif;}
-div#golds span{padding:100px 5px 30px 80px;font: bold italic large serif;}
-div#diamonds span{padding:100px 5px 30px 80px;font: bold italic large serif;}
+div#golds span{padding:100px 5px 30px 80px;font: bold italic large serif;line-height:72px}
+div#diamonds span{padding:100px 5px 30px 80px;font: bold italic large serif;line-height:72px}
 </style>
 
-<header class=gr>
+<header class="game gr" >
 <div class=gc-1-2>
 <div id=managerBox></div></div>
 <div class=gc-1-4><div id=golds></div></div>
 <div class=gc-1-4><div id=diamonds></div></div>
 </header>
 
-<nav>
+<nav class=game>
 <ul id=gameMenu>
-<li id=stadium><a href=#stadium title=Stadium>Stadium</a></li>
+<li id=stadium><a href=#stadiumDlg title=Stadium>Stadium</a></li>
 <li id=news><a href=#news title="News Center">News Center</a></li>
 <li id=academy><a href=#academy title="Academy Center">Academy Center</a></li>
 <li id=rehab><a href=#rehab title="Rehab Center">Rehab Center</a></li>
 <li id=admin><a href=#admin title="Admin Office">Admin Office</a></li>
 <li id=train><a href=#trainDlg title="Training Ground">Training Ground</a></li>
-<li id=fame><a href=#fame title="Hall of Fame">Hall of Fame</a></li>
+<li id=fame><a href=#fameDlg title="Hall of Fame">Hall of Fame</a></li>
 <li id=factory><a href=#factory title="Gear Factory">Gear Factory</a></li>
 </ul>
 </nav>
 
-<footer>
+<footer class=game>
 <ul id=shortcut>
-<li id=stadium><a href=#stadium title=Stadium>Stadium</a></li>
+<li id=stadium><a href=#stadiumDlg title=Stadium>Stadium</a></li>
 <li id=news><a href=#news title="News Center">News Center</a></li>
 <li id=academy><a href=#academy title="Academy Center">Academy Center</a></li>
 <li id=rehab><a href=#rehab title="Rehab Center">Rehab Center</a></li>
 <li id=admin><a href=#admin title="Admin Office">Admin Office</a></li>
 <li id=train><a href=#trainDlg title="Training Ground">Training Ground</a></li>
-<li id=fame><a href=#fame title="Hall of Fame">Hall of Fame</a></li>
+<li id=fame><a href=#fameDlg title="Hall of Fame">Hall of Fame</a></li>
 <li id=factory><a href=#factory title="Gear Factory">Gear Factory</a></li>
 </ul>
 </footer>
@@ -70,6 +70,9 @@ var onLoad = function(){
     var
     dialogs = document.querySelector('div#dialogs'),
     trainDlg = document.createElement('div'),
+    stadiumDlg = document.createElement('div'),
+    fameDlg = document.createElement('div'),
+    playerDlg = document.createElement('div'),
     userData = me[G_SESSION.USER_DATA],
     user = userData.getMe();
 
@@ -84,7 +87,13 @@ var onLoad = function(){
     diamondCont.innerHTML = diamondTempl.replace('DIAMOND', 0);
 
     dialogs.appendChild(trainDlg);
+    dialogs.appendChild(stadiumDlg);
+    dialogs.appendChild(fameDlg);
+    dialogs.appendChild(playerDlg);
     pico.embed(trainDlg, 'views/dlgTrain.html');
+    pico.embed(stadiumDlg, 'views/dlgStadium.html');
+    pico.embed(fameDlg, 'views/dlgFame.html');
+    pico.embed(fameDlg, 'views/dlgPlayer.html');
 };
 
 me.use(G_SESSION.USER_DATA);

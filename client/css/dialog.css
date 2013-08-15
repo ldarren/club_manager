@@ -1,4 +1,4 @@
-div.uiModalDlg{
+div.uiModal{
     position:fixed;
     font-family: Arial, Helvetica, san-serif;
     top: 0;
@@ -11,34 +11,59 @@ div.uiModalDlg{
     -webkit-transition: opacity 400ms ease-in;
     pointer-events: none;
 }
-div.uiModalDlg:target{
+div.uiModal:target{
     opacity:1;
     pointer-events: auto;
 }
-div.uiModalDlg div:nth-child(1) {
+div.uiModal div.uiModalDlg {
     width: 400px;
     position: relative;
     margin: 10% auto;
-    padding: 5px 20px 13px 20px;
-    border-radius: 10px;
-    background: #fff;
-    background: -webkit-linear-gradient(#fff, #999);
 }
-div.uiModalDlg a.closeBtn{
-    background: #606061;
-    color: #FFFFFF;
-    line-height: 25px;
-    position: absolute;
-    right: -12px;
-    top: -10px;
-    width: 24px;
-    text-align: center;
-    text-decoration: none;
+div.uiModalDlg header {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    background: #494949;
+    background: -webkit-linear-gradient(0deg, rgba(48, 48, 48, 1), rgba(111, 111, 111, 0.8));
+    background: -moz-linear-gradient(0deg, rgba(48, 48, 48, 1), rgba(111, 111, 111, 0.8));
+    color: white;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+div.uiModalDlg main{
+    width: 100%;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+    background: #bebebe;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+div.uiModalDlg header img{
+    display:inline-block;
+    vertical-align: middle;
+    height: 45px;
+}
+div.uiModalDlg header span{
+    margin:0 0 0 20px;
+    display:inline-block;
+    vertical-align: middle;
     font-weight: bold;
-    border-radius: 12px;
-    box-shadow: 1px 1px 3px #000;
+    font-size: 36px;
 }
-div.uiModalDlg a.closeBtn:hover { background: #00d9ff; }
+div.uiModalDlg header a.closeBtn{
+    background: #333333;
+    color: #FFFFFF;
+    line-height: 50px;
+    float:right;
+    width: 50px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    text-decoration: none;
+}
+div.uiModalDlg  header a.closeBtn:hover { background: #00d9ff; }
 
 table.zebra{
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
