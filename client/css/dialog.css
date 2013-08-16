@@ -114,6 +114,9 @@ table.uiTable {
 }
 table.uiTable thead {
     display:block;
+    border-top: 4px groove lightgrey;
+    border-bottom: 4px groove lightgrey;
+    margin:5px 0 5px 0;
 }
 table.uiTable thead th {
     font-weight: bold;
