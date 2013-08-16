@@ -2,6 +2,7 @@
     margin:0;
     padding:0;
 }
+a{ outline:none;}
 @media (max-height: 1080px){
 body{
     background:url('../res/img/bg_small.png') #649f00 no-repeat;
@@ -52,7 +53,6 @@ ul#gameMenu li a {
     display: inline-block;
     text-indent: -9999px;
     text-decoration: none;
-    outline: none;
     cursor: default;
 }
 
@@ -109,7 +109,7 @@ ul#shortcut li {
     display: inline-block;
     position: relative;
     list-style: none;
-    margin: 0 13px 0 13px;
+    margin: 0 0 0 25px;
 }
 ul#shortcut li a {
     display: inline-block;

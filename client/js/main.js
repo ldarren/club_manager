@@ -130,10 +130,10 @@ pico.def(G_SESSION.USER_DATA, 'piDataModel', function(){
 
     me.getMe = function(){
         var email = store.getItem('me');
-        if (!email) return [];
+        if (!email) return;
         var users = me.get({email:email});
         if (users && users.length) return users[0];
-        return [];
+        return;
     };
 
     me.setMe = function(email){

@@ -1,5 +1,5 @@
 <div id=fameDlg class=uiModal>
-    <div class=uiModalDlg style="width:1024px;">
+    <div class=uiModalDlg style="width:768px;">
     <header>
         <img src=../res/img/icon_fame_d.png alt=icon />
         <span>Hall of Fame</span>
@@ -11,14 +11,74 @@
         <li><a href=#>Italy</a></li>
         <li><a href=#>Spain</a></li>
         </ul>
+        <table class=uiTable>
+            <thead>
+                <tr>
+                <th scope=col>#</th>
+                <th scope=col>Team</th>
+                <th scope=col>MP</th>
+                <th scope=col>W</th>
+                <th scope=col>D</th>
+                <th scope=col>L</th>
+                <th scope=col>GF</th>
+                <th scope=col>GA</th>
+                <th scope=col>GD</th>
+                <th scope=col>PT</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan=10>Division 1</td>
+                </tr>
+            </tfoot>
+        </table>
     </main>
     </div>
 </div>
 
-<script name=trainDlg>
+<script templ=fixture type=text/templ>
+    <td scope=col>POS</td>
+    <td scope=col>TEAM</td>
+    <td scope=col>MP</td>
+    <td scope=col>W</td>
+    <td scope=col>D</td>
+    <td scope=col>L</td>
+    <td scope=col>GF</td>
+    <td scope=col>GA</td>
+    <td scope=col>GD</td>
+    <td scope=col>PT</td>
+</script>
+
+<script name=fameDlg>
     var
     me = this,
     activeTab,
+    fixtureRow = document.querySelector('script[templ=fixture]').textContent,
+    showLeague = function(){
+        var
+        table = document.querySelector('table.uiTable tbody'),
+        row;
+
+        table.innerHTML = '';
+
+        for(var i=0,l=30; i<l; i++){
+            row = document.createElement('tr');
+            row.innerHTML = fixtureRow
+                .replace('POS', i)
+                .replace('TEAM', 'Team Name'+i)
+                .replace('MP', 1234)
+                .replace('GF', 1234)
+                .replace('GA', 1234)
+                .replace('GD', 1234)
+                .replace('PT', 1234)
+                .replace('W', 1234)
+                .replace('D', 1234)
+                .replace('L', 1234);
+            table.appendChild(row);
+        }
+    },
     onChangePage = function(evt){
         evt.preventDefault();
         evt.stopPropagation();
@@ -30,10 +90,13 @@
             activeTab = a;
             switch(a.textContent){
                 case 'England':
+                    showLeague();
                     break;
                 case 'Italy':
+                    showLeague();
                     break;
                 case 'Spain':
+                    showLeague();
                     break;
             }
         }
@@ -41,7 +104,6 @@
         return false;
     },
     onLoad = function(){
-        debugger;
         var
         ul = document.querySelector('ul.uiTabs'),
         lis = ul.children,
@@ -56,6 +118,7 @@
                 activeTab = a;
             }
         }
+        showLeague();
     };
 
     me.slot(pico.LOAD, onLoad);
