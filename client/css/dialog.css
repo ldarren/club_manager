@@ -108,6 +108,12 @@ ul.uiTabs li a#current{
 
 table.uiTable {
     border-collapse: collapse;
+    background: #bebebe;
+    border-left: 20px solid #bebebe;
+    border-right: 20px solid #bebebe;
+}
+table.uiTable thead {
+    display:block;
 }
 table.uiTable thead th {
     font-weight: bold;
@@ -115,23 +121,48 @@ table.uiTable thead th {
     padding:5px;
 }
 table.uiTable tbody {
+    display:block;
     max-height: 500px;
     overflow: auto;
 }
 table.uiTable tbody td {
-    border-left: 10px solid #bebebe;
-    border-right: 10px solid #bebebe;
+    border-right: 20px solid #bebebe;
     border-top: 0;
     border-bottom: 0;
     padding:5px;
 }
+table.uiTable tbody td:nth-last-child(1) {
+    border:0;
+}
 table.uiTable tbody tr:nth-child(even) {
-       background: #dcf8e3;
-       background: -webkit-linear-gradient(0deg, #dcf8e3, #b7cbc2);
-       background: -moz-linear-gradient(0deg, #dcf8e3, #b7cbc2);
+    background: #dcf8e3;
+    background: -webkit-linear-gradient(0deg, #dcf8e3, #b7cbc2);
+    background: -moz-linear-gradient(0deg, #dcf8e3, #b7cbc2);
 }
 table.uiTable tbody tr:nth-child(odd) {
-       background: #eee;
-       background: -webkit-linear-gradient(0deg, #eee, #ccc);
-       background: -moz-linear-gradient(0deg, #eee, #ccc);
+    background: #eee;
+    background: -webkit-linear-gradient(0deg, #eee, #ccc);
+    background: -moz-linear-gradient(0deg, #eee, #ccc);
+}
+table.uiTable tfoot span {
+    display:block;
+    margin:5px;
+    border:2px solid #545454;
+    background: #7d7d7d;
+    color:#d9ff33;
+    font-weight:bold;
+    font-size:12px;
+    text-align:center;
+    line-height:24px;
+}
+::-webkit-scrollbar {
+width: 12px;
+}
+::-webkit-scrollbar-track {
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+border-radius: 10px;
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
