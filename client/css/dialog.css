@@ -128,13 +128,13 @@ table.uiTable tbody {
     max-height: 500px;
     overflow: auto;
 }
-table.uiTable tbody td {
+table.uiTable thead th, table.uiTable tbody td {
     border-right: 20px solid #bebebe;
     border-top: 0;
     border-bottom: 0;
     padding:5px;
 }
-table.uiTable tbody td:nth-last-child(1) {
+table.uiTable thead th:nth-last-child(1),table.uiTable tbody td:nth-last-child(1) {
     border:0;
 }
 table.uiTable tbody tr:nth-child(even) {
@@ -146,6 +146,9 @@ table.uiTable tbody tr:nth-child(odd) {
     background: #eee;
     background: -webkit-linear-gradient(0deg, #eee, #ccc);
     background: -moz-linear-gradient(0deg, #eee, #ccc);
+}
+table.uiTable tbody tr.current {
+    background: #00d9ff;
 }
 table.uiTable tfoot span {
     display:block;

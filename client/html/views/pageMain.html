@@ -90,10 +90,12 @@ var onLoad = function(){
     dialogs.appendChild(stadiumDlg);
     dialogs.appendChild(fameDlg);
     dialogs.appendChild(playerDlg);
-    pico.embed(trainDlg, 'views/dlgTrain.html');
-    pico.embed(stadiumDlg, 'views/dlgStadium.html');
-    pico.embed(fameDlg, 'views/dlgFame.html');
-    pico.embed(playerDlg, 'views/dlgPlayer.html');
+
+    pico.embed(playerDlg, 'views/dlgPlayer.html', function(){
+        pico.embed(trainDlg, 'views/dlgTrain.html');
+        pico.embed(stadiumDlg, 'views/dlgStadium.html');
+        pico.embed(fameDlg, 'views/dlgFame.html');
+    });
 };
 
 me.use(G_SESSION.USER_DATA);

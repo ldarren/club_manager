@@ -1,14 +1,14 @@
 <style>
-table.uiTable thead th:nth-child(1), table.uiTable tbody td:nth-child(1) {width:40px}
-table.uiTable thead th:nth-child(2), table.uiTable tbody td:nth-child(2) {width:100px}
-table.uiTable thead th:nth-child(3), table.uiTable tbody td:nth-child(3) {width:70px}
-table.uiTable thead th:nth-child(4), table.uiTable tbody td:nth-child(4) {width:70px}
-table.uiTable thead th:nth-child(5), table.uiTable tbody td:nth-child(5) {width:70px}
-table.uiTable thead th:nth-child(6), table.uiTable tbody td:nth-child(6) {width:70px}
-table.uiTable thead th:nth-child(7), table.uiTable tbody td:nth-child(7) {width:70px}
-table.uiTable thead th:nth-child(8), table.uiTable tbody td:nth-child(8) {width:70px}
-table.uiTable thead th:nth-child(9), table.uiTable tbody td:nth-child(9) {width:70px}
-table.uiTable thead th:nth-child(10), table.uiTable tbody td:nth-child(10) {width:70px}
+div#fameDlg thead th:nth-child(1), div#fameDlg tbody td:nth-child(1) {width:40px}
+div#fameDlg thead th:nth-child(2), div#fameDlg tbody td:nth-child(2) {width:100px}
+div#fameDlg thead th:nth-child(3), div#fameDlg tbody td:nth-child(3) {width:70px}
+div#fameDlg thead th:nth-child(4), div#fameDlg tbody td:nth-child(4) {width:70px}
+div#fameDlg thead th:nth-child(5), div#fameDlg tbody td:nth-child(5) {width:70px}
+div#fameDlg thead th:nth-child(6), div#fameDlg tbody td:nth-child(6) {width:70px}
+div#fameDlg thead th:nth-child(7), div#fameDlg tbody td:nth-child(7) {width:70px}
+div#fameDlg thead th:nth-child(8), div#fameDlg tbody td:nth-child(8) {width:70px}
+div#fameDlg thead th:nth-child(9), div#fameDlg tbody td:nth-child(9) {width:70px}
+div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:70px}
 </style>
 <div id=fameDlg class=uiModal>
     <div class=uiModalDlg style="width:760px;">
@@ -50,7 +50,7 @@ table.uiTable thead th:nth-child(10), table.uiTable tbody td:nth-child(10) {widt
     </div>
 </div>
 
-<script templ=fixture type=text/templ>
+<script templ=league type=text/templ>
     <td scope=col>POS</td>
     <td scope=col>TEAM</td>
     <td scope=col>MP</td>
@@ -67,17 +67,17 @@ table.uiTable thead th:nth-child(10), table.uiTable tbody td:nth-child(10) {widt
     var
     me = this,
     activeTab,
-    fixtureRow = document.querySelector('script[templ=fixture]').textContent,
+    leagueRow = document.querySelector('script[templ=league]').textContent,
     showLeague = function(){
         var
-        table = document.querySelector('table.uiTable tbody'),
+        table = document.querySelector('div#fameDlg table.uiTable tbody'),
         row;
 
         table.innerHTML = '';
 
         for(var i=0,l=14; i<l; i++){
             row = document.createElement('tr');
-            row.innerHTML = fixtureRow
+            row.innerHTML = leagueRow
                 .replace('POS', (i+1))
                 .replace('TEAM', 'Team Name'+i)
                 .replace('MP', 1234)
@@ -95,7 +95,7 @@ table.uiTable thead th:nth-child(10), table.uiTable tbody td:nth-child(10) {widt
         evt.preventDefault();
         evt.stopPropagation();
 
-        var a = evt.target;
+        var a = evt.currentTarget;
         if (a !== activeTab){
             activeTab.id = '';
             a.id = 'current';

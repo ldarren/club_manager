@@ -1,11 +1,119 @@
+<style>
+div#trainDlg thead th:nth-child(1), div#trainDlg tbody td:nth-child(1) {width:60px}
+div#trainDlg thead th:nth-child(2), div#trainDlg tbody td:nth-child(2) {width:160px}
+div#trainDlg thead th:nth-child(3), div#trainDlg tbody td:nth-child(3) {width:130px}
+div#trainDlg thead th:nth-child(4), div#trainDlg tbody td:nth-child(4) {width:105px}
+div#trainDlg thead th:nth-child(5), div#trainDlg tbody td:nth-child(5) {width:104px}
+div#trainDlg thead th:nth-child(6), div#trainDlg tbody td:nth-child(6) {width:100px}
+div#trainDlg thead th:nth-child(7), div#trainDlg tbody td:nth-child(7) {width:100px}
+div#trainDlg thead th:nth-child(8), div#trainDlg tbody td:nth-child(8) {width:123px}
+div#trainDlg thead th:nth-child(9), div#trainDlg tbody td:nth-child(9) {width:100px}
+div#trainDlg thead th:nth-child(10), div#trainDlg tbody td:nth-child(10) {width:100px}
+</style>
 <div id=trainDlg class=uiModal>
-    <div class=uiModalDlg style="width:1024px;">
+    <div class=uiModalDlg style="width:1280px;">
     <header>
         <img src=../res/img/icon_train_d.png alt=icon />
         <span>Training Ground</span>
         <a class=closeBtn href=#close>X</a>
     </header>
     <main>
+        <table class=uiTable>
+            <thead>
+                <tr>
+                <th scope=col>#</th>
+                <th scope=col>Name</th>
+                <th scope=col>Pref Side</th>
+                <th scope=col>Shooting</th>
+                <th scope=col>Shot Stopping</th>
+                <th scope=col>Passing</th>
+                <th scope=col>Tackling</th>
+                <th scope=col>Aggression</th>
+                <th scope=col>Stamina</th>
+                <th scope=col>Avail</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </main>
     </div>
 </div>
+
+<script templ=team type=text/templ>
+    <td scope=col>POS</td>
+    <td scope=col>NAME</td>
+    <td scope=col>PREF_SIDE</td>
+    <td scope=col>SH</td>
+    <td scope=col>ST</td>
+    <td scope=col>PS</td>
+    <td scope=col>TK</td>
+    <td scope=col>AG</td>
+    <td scope=col>STAMINA</td>
+    <td scope=col>AVAIL</td>
+</script>
+
+<script name=dlgTrain>
+    this.use(G_SESSION.USER_DATA);
+    this.use('dlgPlayer');
+
+    var
+    me = this,
+    selectedRow,
+    trainRow = document.querySelector('script[templ=team]').textContent,
+    showTeam = function(){
+        var
+        userData = me[G_SESSION.USER_DATA],
+        user = userData.getMe(),
+        team = user.team,
+        table = document.querySelector('div#trainDlg table.uiTable tbody'),
+        row, player;
+
+        table.innerHTML = '';
+
+        for(var i=0,l=team.length; i<l; i++){
+            player = team[i];
+            row = document.createElement('tr');
+            row.innerHTML = trainRow
+                .replace('POS', (i+1))
+                .replace('NAME', player.name)
+                .replace('PREF_SIDE', player.pref_side)
+                .replace('SH', player.sh)
+                .replace('ST', player.st)
+                .replace('PS', player.ps)
+                .replace('TK', player.tk)
+                .replace('AG', player.ag)
+                .replace('STAMINA', player.stamina)
+                .replace('AVAIL', player.injury > 0 || player.suspension > 0 ? 'No' : 'Yes');
+            table.appendChild(row);
+        }
+    },
+    onShowPlayerDetails = function(evt){
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        var row = evt.currentTarget;
+        row.className = 'current';
+        if(selectedRow) selectedRow.className = '';
+        selectedRow = row;
+
+        me.dlgPlayer.setPlayerId(evt.target.id);
+        pico.changeHash('playerDlg');
+
+        return false;
+    },
+    onLoad = function(){
+
+        showTeam();
+
+        var
+        body = document.querySelector('div#trainDlg tbody'),
+        trs = body.querySelectorAll('tr');
+
+        for(var i=0,l=trs.length; i<l; i++){
+            trs[i].addEventListener('click', onShowPlayerDetails, false);
+        }
+    };
+
+    me.slot(pico.LOAD, onLoad);
+</script>

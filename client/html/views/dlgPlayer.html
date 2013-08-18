@@ -3,9 +3,20 @@
     <header>
         <img src=../res/img/icon_train_d.png alt=icon />
         <span>Player Stats</span>
-        <a class=closeBtn href=#close>X</a>
+        <a class=closeBtn href=#trainDlg>X</a>
     </header>
     <main>
     </main>
     </div>
 </div>
+
+<script name=dlgPlayer>
+    this.use(G_SESSION.USER_DATA);
+
+    var
+    me = this;
+
+    me.setPlayerId = function(id){
+        var userData = me[G_SESSION.USER_DATA];
+    };
+</script>
