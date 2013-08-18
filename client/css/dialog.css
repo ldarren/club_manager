@@ -109,14 +109,12 @@ ul.uiTabs li a#current{
 table.uiTable {
     border-collapse: collapse;
     background: #bebebe;
-    border-left: 20px solid #bebebe;
-    border-right: 20px solid #bebebe;
 }
 table.uiTable thead {
     display:block;
     border-top: 4px groove lightgrey;
     border-bottom: 4px groove lightgrey;
-    margin:5px 0 5px 0;
+    margin:5px 20px 5px 20px;
 }
 table.uiTable thead th {
     font-weight: bold;
@@ -126,6 +124,7 @@ table.uiTable tbody {
     display:block;
     max-height: 500px;
     overflow: auto;
+    margin:0 20px 20px 20px;
 }
 table.uiTable thead th, table.uiTable tbody td {
     box-sizing:border-box;
