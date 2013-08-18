@@ -1,14 +1,14 @@
 <style>
-div#trainDlg thead th:nth-child(1), div#trainDlg tbody td:nth-child(1) {width:60px}
-div#trainDlg thead th:nth-child(2), div#trainDlg tbody td:nth-child(2) {width:160px}
-div#trainDlg thead th:nth-child(3), div#trainDlg tbody td:nth-child(3) {width:130px}
-div#trainDlg thead th:nth-child(4), div#trainDlg tbody td:nth-child(4) {width:105px}
-div#trainDlg thead th:nth-child(5), div#trainDlg tbody td:nth-child(5) {width:104px}
-div#trainDlg thead th:nth-child(6), div#trainDlg tbody td:nth-child(6) {width:100px}
-div#trainDlg thead th:nth-child(7), div#trainDlg tbody td:nth-child(7) {width:100px}
-div#trainDlg thead th:nth-child(8), div#trainDlg tbody td:nth-child(8) {width:123px}
-div#trainDlg thead th:nth-child(9), div#trainDlg tbody td:nth-child(9) {width:100px}
-div#trainDlg thead th:nth-child(10), div#trainDlg tbody td:nth-child(10) {width:100px}
+div#trainDlg thead th:nth-child(1), div#trainDlg tbody td:nth-child(1) {width:30px}
+div#trainDlg thead th:nth-child(2), div#trainDlg tbody td:nth-child(2) {width:100px}
+div#trainDlg thead th:nth-child(3), div#trainDlg tbody td:nth-child(3) {width:60px}
+div#trainDlg thead th:nth-child(4), div#trainDlg tbody td:nth-child(4) {width:60px}
+div#trainDlg thead th:nth-child(5), div#trainDlg tbody td:nth-child(5) {width:60px}
+div#trainDlg thead th:nth-child(6), div#trainDlg tbody td:nth-child(6) {width:60px}
+div#trainDlg thead th:nth-child(7), div#trainDlg tbody td:nth-child(7) {width:60px}
+div#trainDlg thead th:nth-child(8), div#trainDlg tbody td:nth-child(8) {width:80px}
+div#trainDlg thead th:nth-child(9), div#trainDlg tbody td:nth-child(9) {width:60px}
+div#trainDlg thead th:nth-child(10), div#trainDlg tbody td:nth-child(10) {width:60px}
 </style>
 <div id=trainDlg class=uiModal>
     <div class=uiModalDlg style="width:1024px;">
@@ -85,6 +85,7 @@ div#trainDlg thead th:nth-child(10), div#trainDlg tbody td:nth-child(10) {width:
                 .replace('AG', player.ag)
                 .replace('STAMINA', player.stamina)
                 .replace('AVAIL', player.injury > 0 || player.suspension > 0 ? 'No' : 'Yes');
+            row.id = player.playerId;
             table.appendChild(row);
         }
     },
@@ -92,13 +93,27 @@ div#trainDlg thead th:nth-child(10), div#trainDlg tbody td:nth-child(10) {width:
         evt.preventDefault();
         evt.stopPropagation();
 
-        var row = evt.currentTarget;
+        var
+        userData = me[G_SESSION.USER_DATA],
+        user = userData.getMe(),
+        team = user.team,
+        row = evt.currentTarget,
+        player, playerId;
+
         row.className = 'current';
         if(selectedRow) selectedRow.className = '';
         selectedRow = row;
 
-        me.dlgPlayer.setPlayerId(evt.target.id);
-        pico.changeHash('playerDlg');
+        playerId = row.id;
+
+        for(var i=0,l=team.length; i<l; i++){
+            player = team[i];
+            if (playerId == player.playerId){
+                me.dlgPlayer.setPlayer(player);
+                pico.changeHash('playerDlg');
+                break;
+            }
+        }
 
         return false;
     },

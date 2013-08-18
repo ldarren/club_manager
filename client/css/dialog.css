@@ -123,28 +123,29 @@ table.uiTable thead th {
 table.uiTable tbody {
     display:block;
     max-height: 500px;
-    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: auto;
     margin:0 20px 20px 20px;
 }
 table.uiTable thead th, table.uiTable tbody td {
-    box-sizing:border-box;
+    display:inline-block;
     border-right: 20px solid #bebebe;
     padding:5px;
 }
 table.uiTable thead th:nth-last-child(1),table.uiTable tbody td:nth-last-child(1) {
     border:0;
 }
-table.uiTable tbody tr:nth-child(even) {
+table.uiTable tbody tr:nth-child(even) td {
     background: #dcf8e3;
     background: -webkit-linear-gradient(0deg, #dcf8e3, #b7cbc2);
     background: -moz-linear-gradient(0deg, #dcf8e3, #b7cbc2);
 }
-table.uiTable tbody tr:nth-child(odd) {
+table.uiTable tbody tr:nth-child(odd) td {
     background: #eee;
     background: -webkit-linear-gradient(0deg, #eee, #ccc);
     background: -moz-linear-gradient(0deg, #eee, #ccc);
 }
-table.uiTable tbody tr.current {
+table.uiTable tbody tr.current td {
     background: #00d9ff;
 }
 table.uiTable tfoot span {
