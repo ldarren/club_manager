@@ -1,11 +1,23 @@
 var
 sqlUser = require('./sql/user'),
 sqlPlayers = require('./sql/players'),
-sqlLeagues = require('./sql/leagues'),
+redisLeagues = require('./redis/leagues'),
 memEsms = require('./mem/esms');
 
-exports.addToLeague = function(session, order, cb){
-    cb();
+const
+USER_MODEL_ID = G_SESSION.USER_DATA;
+
+exports.add = function(session, order, cb){
+    var
+    model = session.getModel(USER_MODEL_ID),
+    data = order.data,
+    email = data[G_CONST.EMAIL],
+    userData = data[email];
+
+    redisLeagues.addTeam(userData.userId, function(err, leagueId){
+        if (err) return cb(err);
+        cb();
+    }
 };
 
 exports.getLeague = function(session, order, cb){

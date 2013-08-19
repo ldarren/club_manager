@@ -1,6 +1,7 @@
 var
 mUsers = require('../models/users'),
-mPlayers = require('../models/players');
+mPlayers = require('../models/players'),
+mLeagues = require('../models/leagues');
 
 exports.setup = function(context, next){
     var web = context.webServer;

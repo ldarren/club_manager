@@ -11,9 +11,7 @@ exports.setup = function(context, next){
     next();
 };
 
-exports.save = function(models, cb){
-console.log(JSON.stringify(models));
-    var data = models[0];
+exports.save = function(data, cb){
     client.query(SAVE, [
         data[G_CONST.EMAIL],
         data[G_CONST.PASSWORD],

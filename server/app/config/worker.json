@@ -20,22 +20,21 @@
             "pub":"req",
             "sub":"res"
         },
-        "redisUser":{
+        "redisUsers":{
             "mod":"redis",
             "host":"localhost",
             "port":6379,
             "db":0,
             "options":{}
         },
-        "sqlUsers":{
-            "mod":"mysql",
+        "redisLeagues":{
+            "mod":"redis",
             "host":"localhost",
-            "port":3306,
-            "username":"proj_433_admin",
-            "password":"433",
-            "db":"proj_433_db"
+            "port":6379,
+            "db":1,
+            "options":{}
         },
-        "sqlLeagues":{
+        "sqlUsers":{
             "mod":"mysql",
             "host":"localhost",
             "port":3306,

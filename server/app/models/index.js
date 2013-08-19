@@ -6,5 +6,6 @@ module.exports = [
     require('./sql/users'),
     require('./sql/players'),
 
-    require('./redis/user'),
+    require('./redis/users'),
+    require('./redis/leagues'),
 ];
