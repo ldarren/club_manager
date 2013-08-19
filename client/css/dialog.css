@@ -18,7 +18,7 @@ div.uiModal:target{
 div.uiModal div.uiModalDlg {
     width: 400px;
     position: relative;
-    margin: 10% auto;
+    margin: 4% auto;
 }
 div.uiModalDlg header {
     width: 100%;

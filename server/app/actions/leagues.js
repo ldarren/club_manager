@@ -45,34 +45,6 @@ function createMatch(session, order, next){
     modelInfo.push([{modelId:MODEL_MATCH, key:'me'}]);
 
     session.addJob(
-        G_CCONST.CREATE,
-        order.api,
-        order.reqId,
-        undefined,
-        undefined,
-        G_PICO_WEB.RENDER_FULL,
-        modelInfo
-    );
-
-    next();
-}
-
-function createTeam(session, order, next){
-    var
-    model = session.getModel(MODEL_TEAM),
-    data = order.data,
-    teamName,players,
-    modelInfo = [];
-
-    for (var i=0,l=data.length; i<l; i++){
-        teamName = data[i].name;
-        players = rosterCreator({N_GK:1,N_DF:2,N_DM:3,N_MF:4,N_AM:5,N_FW:6,RANDOM_SEED:i});
-        model[teamName] = {name:teamName, players:players};
-        modelInfo.push([{modelId:MODEL_TEAM, key:teamName}]);
-    }
-
-    session.addJob(
-        G_CCONST.CREATE,
         order.api,
         order.reqId,
         undefined,
@@ -98,7 +70,6 @@ function createFixtures(session, order, next){
     modelInfo.push([{modelId:MODEL_FIXTURES, key:'me'}]);
 
     session.addJob(
-        G_CCONST.CREATE,
         order.api,
         order.reqId,
         undefined,
@@ -113,7 +84,7 @@ function createFixtures(session, order, next){
 exports.setup = function(context, next){
     var web = context.webServer;
 
-    web.route(G_API.TEAM_CREATE, [createTeam]);
+    web.route(G_API.LEAGUE_READ, [createFixtures]);
     web.route(G_API.FIXTURES_CREATE, [createFixtures]);
     web.route(G_API.MATCH_CREATE, [createMatch]);
 

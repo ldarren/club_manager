@@ -34,6 +34,14 @@
             "username":"proj_433_admin",
             "password":"433",
             "db":"proj_433_db"
+        },
+        "sqlLeagues":{
+            "mod":"mysql",
+            "host":"localhost",
+            "port":3306,
+            "username":"proj_433_admin",
+            "password":"433",
+            "db":"proj_433_db"
         }
     }
 }

@@ -1,6 +1,6 @@
 var
-redisUser = require('./redis/user'),
-sqlUser = require('./sql/user'),
+redisUsers = require('./redis/users'),
+sqlUsers = require('./sql/users'),
 sqlPlayers = require('./sql/players'),
 memEsms = require('./mem/esms');
 
@@ -29,8 +29,8 @@ exports.create = function(session, order, cb){
     session.addJob(
         api,
         order.reqId,
-        sqlUser,
-        sqlUser.save,
+        sqlUsers,
+        sqlUsers.save,
         G_PICO_WEB.RENDER_FULL,
         [[{modelId:MODEL_ID, key:email}]],
         G_CONST.USER_ID
@@ -57,7 +57,7 @@ exports.loadTeam = function(session, order, cb){
 
     if (!userId) return cb('invalid params');
 
-    sqlUser.getByUserId(userId, function(err, results){
+    sqlUsers.getByUsersId(userId, function(err, results){
         if (err) return cb(err);
         var
         result = results[0],
@@ -83,7 +83,7 @@ exports.loadTeamByEmail = function(session, order, cb){
     data = order.data,
     email = data[G_CONST.EMAIL];
     if (!email) return cb('invalid params');
-    sqlUser.getByEmail(email, function(err, results){
+    sqlUsers.getByEmail(email, function(err, results){
         if (err) return cb(err);
         if (!results.length) return cb('email not found:'+email);
         var

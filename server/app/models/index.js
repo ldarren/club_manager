@@ -3,7 +3,7 @@ module.exports = [
     require('./mem/names'),
     require('./mem/esms'),
 
-    require('./sql/user'),
+    require('./sql/users'),
     require('./sql/players'),
 
     require('./redis/user'),

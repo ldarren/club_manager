@@ -12,6 +12,23 @@ CREATE TABLE IF NOT EXISTS `users` (
 PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
 
+CREATE TABLE IF NOT EXISTS `leagues` (
+`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+`leagueId` int unsigned NOT NULL,
+`userId` bigint(20) unsigned NOT NULL,
+`mp` int unsigned NOT NULL,
+`w` int unsigned NOT NULL,
+`d` int unsigned NOT NULL,
+`l` int unsigned NOT NULL,
+`gf` int unsigned NOT NULL,
+`ga` int unsigned NOT NULL,
+`gd` int unsigned NOT NULL,
+`pt` int unsigned NOT NULL,
+`createdAt` datetime NOT NULL,
+`updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
+
 CREATE TABLE IF NOT EXISTS `players` (
 `userId` bigint(20) unsigned NOT NULL,
 `playerId` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
