@@ -1,8 +1,8 @@
 <link rel=stylesheet href=../css/main.css />
 <link rel=stylesheet href=../css/dialog.css />
 <style>
-div#managerBox p{padding:5px 5px 5px 20px;}
-div#managerBox p span{display:block;font: bold italic large serif;}
+div#managerBox dt{padding:2px;}
+div#managerBox dd{margin:1px 0;padding:2px 0;}
 div#golds span{padding:100px 5px 30px 80px;font: bold italic large serif;line-height:72px}
 div#diamonds span{padding:100px 5px 30px 80px;font: bold italic large serif;line-height:72px}
 </style>
@@ -44,13 +44,13 @@ div#diamonds span{padding:100px 5px 30px 80px;font: bold italic large serif;line
 </div>
 
 <script type=text/templ templ=managerInfo>
-<p id=managerInfo>
-<span>Manager Name: NAME</span>
-<span>Manager Nationality: NAT</span>
-<span>Club Name: CLUB</span>
-<span>Club Base: GROUND</span>
-<span>Stadium Name: STADIUM</span>
-</p>
+<dl class=uiDescribe>
+<dt>Manager Name:</dt><dd>NAME</dd>
+<dt>Manager Nationality:</dt><dd>NAT</dd>
+<dt>Club Name:</dt><dd>CLUB</dd>
+<dt>Club Base:</dt><dd>GROUND</dd>
+<dt>Stadium Name:</dt><dd>STADIUM</dd>
+</dl>
 <a href=#managerBoxMenu>Manager Box Menu</a>
 </script>
 <script type=text/templ templ=goldInfo><span>GOLD</span></script>

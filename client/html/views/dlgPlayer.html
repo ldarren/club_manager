@@ -1,18 +1,10 @@
 <style>
-#playerLeftCol, #playerRightCol{
-    display:inline-block;
-    margin:10px;
-}
-#playerLeftCol span, #playerRightCol span{
-    display:block;
-    padding:5px;
-}
-.floatLeft{
-}
-#playerLeftCol{
-    border-right: 4px groove #bebebe;
+#playerDescribe td{
+width:512px;
+vertical-align:top;
 }
 </style>
+
 <div id=playerDlg class=uiModal>
     <div class=uiModalDlg style="width:1024px;">
     <header>
@@ -21,50 +13,50 @@
         <a class=closeBtn href=#trainDlg>X</a>
     </header>
     <main>
-    <div id=playerLeftCol class=floatLeft>
-    </div>
-    <div id=playerRightCol class=floatLeft>
-    </div>
+    <table><tbody><tr id=playerDescribe>
+    <td><dl class=uiDescribe></dl></td>
+    <td><dl class=uiDescribe></dl></td>
+    </tr><tbody></table>
     </main>
     </div>
 </div>
 
 <script type=text/templ templ=playerLeftCol>
-<span>Name: NAME</span>
-<span>Nationality: NAT</span>
-<span>Age:AGE</span>
-<span>Pref side: PREF_SIDE</span>
-<span>Joined Date: JOINED_DATE</span>
+<dt>Name:</dt><dd>NAME</dd>
+<dt>Nationality:</dt><dd>NAT</dd>
+<dt>Age:</dt><dd>AGE</dd>
+<dt>Prefer Side:</dt><dd>PREF_SIDE</dd>
+<dt>Joined Date:</dt><dd>JOINED_DATE</dd>
 </script>
 <script type=text/templ templ=playerRightCol>
-<span>Shooting: SH</span>
-<span>Shot Stopping: ST</span>
-<span>Passing: PS</span>
-<span>Tackling: TK</span>
-<span>Shooting Ability: SH_AB/1000</span>
-<span>Shot Stopping Ability: ST_AB/1000</span>
-<span>Passing Ability: PS_AB/1000</span>
-<span>Tackling Ability: TK_AB/1000</span>
-<span>Stamina: STAMINA</span>
-<span>Agression: AG</span>
-<span>Games: GAMES</span>
-<span>Saves: SAVES</span>
-<span>Tackles: TACKLES</span>
-<span>Keypasses: KEYPASSES</span>
-<span>Shots: SHOTS</span>
-<span>Goals: GOALS</span>
-<span>Assists: ASSISTS</span>
-<span>dp: DP</span>
-<span>Injury: INJURY</span>
-<span>Suspension: SUSPENSION</span>
-<span>Fitness: FITNESS</span>
+<dt>Shooting:</dt><dd>SH</dd>
+<dt>Shot Stopping:</dt><dd>ST</dd>
+<dt>Passing:</dt><dd>PS</dd>
+<dt>Tackling:</dt><dd>TK</dd>
+<dt>Shooting Ability:</dt><dd>SH_AB/1000</dd>
+<dt>Shot Stopping Ability:</dt><dd>ST_AB/1000</dd>
+<dt>Passing Ability:</dt><dd>PS_AB/1000</dd>
+<dt>Tackling Ability:</dt><dd>TK_AB/1000</dd>
+<dt>Stamina:</dt><dd>STAMINA</dd>
+<dt>Agression:</dt><dd>AG</dd>
+<dt>Games:</dt><dd>GAMES</dd>
+<dt>Saves:</dt><dd>SAVES</dd>
+<dt>Tackles:</dt><dd>TACKLES</dd>
+<dt>Keypasses:</dt><dd>KEYPASSES</dd>
+<dt>Shots:</dt><dd>SHOTS</dd>
+<dt>Goals:</dt><dd>GOALS</dd>
+<dt>Assists:</dt><dd>ASSISTS</dd>
+<dt>dp:</dt><dd>DP</dd>
+<dt>Injury:</dt><dd>INJURY</dd>
+<dt>Suspension:</dt><dd>SUSPENSION</dd>
+<dt>Fitness:</dt><dd>FITNESS</dd>
 </script>
 
 <script name=dlgPlayer>
     var
     me = this,
-    leftCol = document.querySelector('#playerLeftCol'),
-    rightCol = document.querySelector('#playerRightCol'),
+    leftCol = document.querySelector('#playerDescribe td:nth-child(1) dl'),
+    rightCol = document.querySelector('#playerDescribe td:nth-child(2) dl'),
     playerLeftTempl = document.querySelector('script[templ=playerLeftCol]').textContent,
     playerRightTempl = document.querySelector('script[templ=playerRightCol]').textContent;
 
