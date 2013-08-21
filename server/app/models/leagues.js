@@ -17,7 +17,7 @@ exports.add = function(session, order, cb){
     redisLeagues.addTeam(userData.userId, function(err, leagueId){
         if (err) return cb(err);
         cb();
-    }
+    });
 };
 
 exports.getLeague = function(session, order, cb){
@@ -25,7 +25,7 @@ exports.getLeague = function(session, order, cb){
 };
 
 exports.updateLeague = function(session, order, cb){
-    var
+/*    var
     model = session.getModel(MODEL_ID),
     data = order.data,
     api = order.api,
@@ -63,6 +63,6 @@ exports.updateLeague = function(session, order, cb){
         G_PICO_WEB.RENDER_NO,
         [[{modelId:MODEL_ID, key:email}]]
     );
-
+*/
     cb();
 };
