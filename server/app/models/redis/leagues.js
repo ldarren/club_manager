@@ -1,25 +1,22 @@
 const
-EMPTY_TEAM = JSON.stringify({mp:0, w:0, d:0, l:0, gf:0, ga:0, gd:0, pt:0});
-KEY_TEAM = 't:',
-KEY_TEAM_SORTED = 'zT:',
-KEY_LEAGUE_SORTED = ':zL:',
-KEY_LEAGUE_SET = 'sL:',
-KEY_USER_2_LEAGUE = ':hU2L:';
+EMPTY_SCORE = JSON.stringify({mp:0, w:0, d:0, l:0, gf:0, ga:0, gd:0, pt:0});
+KEY_SCORE = 's:',               // user score
+KEY_RANK = 'zR:',               // league ranking
+KEY_LEAGUE_POPULATION = ':zLP:',  // league population
+KEY_USER_2_LEAGUE = ':hU2L:';   // userId get leagueId
 
 var
 client,
-getTeamKey = function(userId) { return KEY_TEAM + userId; },
-getTeamSortedKey = function(leagueId) { return KEY_TEAM_SORTED + leagueId; },
-getLeagueSetKey = function(leagueId){ return KEY_LEAGUE_SET+leagueId; },
-addToLeague = function(leagueId, userId, count, cb){
+getScoreKey = function(userId) { return KEY_SCORE + userId; },
+getRankKey = function(leagueId) { return KEY_RANK + leagueId; },
+addToLeague = function(leagueId, userId, cb){
     var m = client.multi();
     m
-    .set(getTeamKey(userId), EMPTY_TEAM)
-    .zadd(getTeamSortedKey(leagueId), 0, userId)
-    .zadd(KEY_LEAGUE_SORTED, count+1, leagueId)
-    .sadd(getLeagueSetKey(leagueId), userId)
+    .set(getScoreKey(userId), EMPTY_SCORE)
+    .zadd(getRankKey(leagueId), 0, userId)
+    .zincrby(KEY_LEAGUE_POPULATION, 1, leagueId)
     .hset(KEY_USER_2_LEAGUE, userId, leagueId)
-    .exec(err, cb);
+    .exec(cb);
 };
 
 exports.setup = function(context, next){
@@ -27,12 +24,14 @@ exports.setup = function(context, next){
     next();
 };
 
-exports.addTeam = function(userId, cb){
-    client.zrange(KEY_LEAGUE_SORTED, 0, 1, 'WITHSCORES', function(err, leagueId, count){
+exports.add = function(userId, cb){
+    client.zrange([KEY_LEAGUE_POPULATION, 0, 0, 'WITHSCORES'], function(err, list){
         if (err) return cb(err);
-        leagueId = leagueId || 0;
-        if (!count || count >= 14) addToLeague(leagueId+1, userId, 0, cb);
-        addToLeague(leagueId, userId, count, cb);
+        var
+        leagueId = parseInt(list[0]) || 0,
+        count = parseInt(list[1]) || 0;
+        if (!count || count >= 14) addToLeague(leagueId+1, userId, cb);
+        else addToLeague(leagueId, userId, cb);
     });
 };
 

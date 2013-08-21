@@ -1,7 +1,7 @@
 var
-redisUsers = require('./redis/users'),
 sqlUsers = require('./sql/users'),
 sqlPlayers = require('./sql/players'),
+redisUsers = require('./redis/users'),
 redisLeagues = require('./redis/leagues'),
 memEsms = require('./mem/esms');
 
@@ -10,11 +10,15 @@ MODEL_ID = G_SESSION.USER_DATA;
 
 exports.saveData = function(models, cb){
     var data = models[0];
+
     sqlUsers.save(data, function(err, info){
         if (err) return cb(err);
-        redisLeagues.add(info.userId, function(err){
-            if(err) return cb(err);
-            return cb(err, info);
+        sqlPlayers.save(data, function(err){
+            if (err) return cb(err);
+            redisLeagues.add(info.insertId, function(err){
+                if(err) return cb(err);
+                return cb(err, info);
+            });
         });
     });
 };
@@ -41,8 +45,8 @@ exports.create = function(session, order, cb){
     session.addJob(
         api,
         order.reqId,
-        sqlUsers,
-        sqlUsers.save,
+        exports,
+        exports.saveData,
         G_PICO_WEB.RENDER_FULL,
         [[{modelId:MODEL_ID, key:email}]],
         G_CONST.USER_ID
@@ -53,8 +57,8 @@ exports.create = function(session, order, cb){
     session.addJob(
         api,
         order.reqId,
-        this,
-        this.saveData,
+        undefined,
+        undefined,
         G_PICO_WEB.RENDER_NO,
         [[{modelId:MODEL_ID, key:email}]]
     );

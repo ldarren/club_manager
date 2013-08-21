@@ -1,5 +1,5 @@
 var
-sqlUser = require('./sql/user'),
+sqlUsers = require('./sql/users'),
 sqlPlayers = require('./sql/players'),
 redisLeagues = require('./redis/leagues'),
 memEsms = require('./mem/esms');
@@ -46,8 +46,8 @@ exports.updateLeague = function(session, order, cb){
     session.addJob(
         api,
         order.reqId,
-        sqlUser,
-        sqlUser.save,
+        sqlUsers,
+        sqlUsers.save,
         G_PICO_WEB.RENDER_FULL,
         [[{modelId:MODEL_ID, key:email}]],
         G_CONST.USER_ID

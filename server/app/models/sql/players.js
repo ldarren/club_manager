@@ -11,9 +11,8 @@ exports.setup = function(context, next){
     next();
 };
 
-exports.save = function(models, cb){
+exports.save = function(data, cb){
     var
-    data = models[0],
     members = data[G_CONST.TEAM],
     userId = data[G_CONST.USER_ID],
     member,
