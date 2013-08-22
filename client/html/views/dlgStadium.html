@@ -1,3 +1,11 @@
+<style>
+div#stadiumDlg thead th:nth-child(1), div#stadiumDlg tbody td:nth-child(1) {width:40px}
+div#stadiumDlg thead th:nth-child(2), div#stadiumDlg tbody td:nth-child(2) {width:180px}
+div#stadiumDlg thead th:nth-child(3), div#stadiumDlg tbody td:nth-child(3) {width:180px}
+div#stadiumDlg thead th:nth-child(4), div#stadiumDlg tbody td:nth-child(4) {width:330px}
+div#stadiumDlg thead th:nth-child(5), div#stadiumDlg tbody td:nth-child(5) {width:80px}
+</style>
+
 <div id=stadiumDlg class=uiModal>
     <div class=uiModalDlg style="width:1024px;">
     <header>
@@ -6,6 +14,104 @@
         <a class=closeBtn href=#close>X</a>
     </header>
     <main>
+        <table class=uiTable>
+            <thead>
+                <tr>
+                <th scope=col>#</th>
+                <th scope=col>Home Team</th>
+                <th scope=col>Away Team</th>
+                <th scope=col>Date Time</th>
+                <th scope=col>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </main>
     </div>
 </div>
+
+<script templ=fixtureRow type=text/templ>
+    <td scope=col>INDEX</td>
+    <td scope=col>TEAM1</td>
+    <td scope=col>TEAM2</td>
+    <td scope=col>DATETIME</td>
+    <td scope=col><a uid1=USERID1 uid2=USERID2 href=#>Kickoff</a></td>
+</script>
+
+<script name=stadiumDlg>
+    this.use('commentDlg');
+    this.use(G_SESSION.FIXTURES_DATA);
+    this.use(G_SESSION.MATCH_DATA);
+    this.use(G_SESSION.USER_DATA);
+
+    var
+    me = this,
+    fixtureRow = document.querySelector('script[templ=fixtureRow]').textContent,
+    tableBody = document.querySelector('div#stadiumDlg table.uiTable tbody'),
+    kickOff = function(evt){
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        var
+        matchData = me[G_SESSION.MATCH_DATA],
+        a = evt.currentTarget,
+        homeUserId = parseInt(a.getAttribute('uid1')),
+        awayUserId = parseInt(a.getAttribute('uid2'));
+
+        matchData.request(G_CCONST.CREATE, {home:homeUserId, away:awayUserId}, function(err, res){
+            if (err) return console.error(err);
+            me.commentDlg.show(res);
+        });
+
+        return false;
+    },
+    showFixture = function(err, res){
+        var
+        fixture = res['all'],
+        list = fixture.list,
+        map = fixture.map,
+        pos = 0,
+        now = Date.now(),
+        row, matches, match, adv, a, dt, i, l, j, k;
+
+        tableBody.innerHTML = '';
+
+        for(i=0,l=list.length; i<l; i++){
+            matches = list[i];
+            adv = 0;
+
+            for(j=0,k=matches.length; j<k; j++){
+                match = matches[j];
+                row = document.createElement('tr');
+
+                adv += 21600000;
+                now += 21600000;
+                dt = new Date(now);
+
+                row.innerHTML = fixtureRow
+                    .replace('INDEX', ++pos)
+                    .replace('TEAM1', match[0])
+                    .replace('TEAM2', match[1])
+                    .replace('DATETIME', (dt.toDateString() + ' ' + dt.toTimeString()))
+                    .replace('USERID1', map[match[0]])
+                    .replace('USERID2', map[match[1]]);
+
+                a = row.querySelector('a');
+                a.addEventListener('click', kickOff, false);
+                tableBody.appendChild(row);
+            }
+            now += (86400000 - adv);
+        }
+    },
+    onLoad = function(){
+        var
+        fixtureData = me[G_SESSION.FIXTURES_DATA],
+        userData = me[G_SESSION.USER_DATA];
+
+        var user = userData.getMe();
+        fixtureData.request(G_CCONST.READ, {userId: user.userId}, showFixture);
+    };
+
+    me.slot(pico.LOAD, onLoad);
+</script>

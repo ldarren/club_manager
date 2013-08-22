@@ -55,5 +55,29 @@ exports.getLeague = function(userId, cb){
    });
 };
 
+exports.getClubNames = function(userId, cb){
+   client.hget(KEY_USER_2_LEAGUE, userId, function(err, leagueId){
+       if (err) return cb(err);
+       client.zrevrange(getRankKey(leagueId), 0, -1, function(err, userIds){
+           if (err) return cb(err);
+           var m = client.multi();
+           for(var i=0, l=userIds.length; i<l; i++){
+               m.get(getScoreKey(userIds[i]));
+           }
+           m.exec(function(err, table){
+               if (err) return cb(err);
+
+               var list = [], map = {}, name;
+               for(var i=0, l=table.length; i<l; i++){
+                   name = JSON.parse(table[i])[1];
+                   list.push(name);
+                   map[name] = parseInt(userIds[i]);
+               }
+               return cb(err, list, map);
+           });
+       });
+   });
+};
+
 exports.updateLeague = function(userId, league, cb){
 };

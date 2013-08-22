@@ -73,6 +73,7 @@ var onLoad = function(){
     stadiumDlg = document.createElement('div'),
     fameDlg = document.createElement('div'),
     playerDlg = document.createElement('div'),
+    commentDlg = document.createElement('div'),
     userData = me[G_SESSION.USER_DATA],
     user = userData.getMe();
 
@@ -90,11 +91,14 @@ var onLoad = function(){
     dialogs.appendChild(stadiumDlg);
     dialogs.appendChild(fameDlg);
     dialogs.appendChild(playerDlg);
+    dialogs.appendChild(commentDlg);
 
     pico.embed(playerDlg, 'views/dlgPlayer.html', function(){
-        pico.embed(trainDlg, 'views/dlgTrain.html');
-        pico.embed(stadiumDlg, 'views/dlgStadium.html');
-        pico.embed(fameDlg, 'views/dlgFame.html');
+        pico.embed(commentDlg, 'views/dlgComment.html', function(){
+            pico.embed(trainDlg, 'views/dlgTrain.html');
+            pico.embed(stadiumDlg, 'views/dlgStadium.html');
+            pico.embed(fameDlg, 'views/dlgFame.html');
+        });
     });
 };
 

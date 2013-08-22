@@ -135,14 +135,18 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
         evt.preventDefault();
         evt.stopPropagation();
 
-        var a = evt.currentTarget;
+        var
+        leagueData = me[G_SESSION.LEAGUE_DATA],
+        userData = me[G_SESSION.USER_DATA],
+        user = userData.getMe(),
+        a = evt.currentTarget;
         if (a !== activeTab){
             activeTab.id = '';
             a.id = 'current';
             activeTab = a;
             switch(a.textContent){
                 case 'England':
-                    showDemoLeague();
+                    leagueData.request(G_CCONST.READ, {userId: user.userId}, showLeague);
                     break;
                 case 'Italy':
                     showDemoLeague();

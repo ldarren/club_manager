@@ -1,5 +1,5 @@
 Object.freeze(G_CONST = {
-    JOBS: 'jobs',
+    JOBS: 'jobs', // not used juz to prevent same key is used
     LEAGUE: 'league',
     TEAM: 'team',
     FIXTURES: 'fixtures',
@@ -7,16 +7,13 @@ Object.freeze(G_CONST = {
     USER: 'user',
     PLAYERS: 'players',
 
+    TEAM_AWAY: 'away',
     CLUB_NAME: 'club',
     EMAIL: 'email',
-    FUNCTION: 'func',
     CLUB_GROUND: 'ground',
-    MODEL_ID: 'mid',
-    MODEL_INSERTID: 'miid',
-    MODEL_PARAMS: 'mprm',
+    TEAM_HOME: 'home',
     MANAGER_NAME: 'name',
     MANAGER_NATION: 'nationality',
-    OBJECT: 'obj',
     PASSWORD: 'passw',
     STADIUM: 'stadium',
     TEAM: 'team',
@@ -24,13 +21,14 @@ Object.freeze(G_CONST = {
 }); 
 
 Object.freeze(G_API = {
-    LEAGUE_READ: G_CONST.LEAGUE + G_CCONST.READ,
-    LEAGUE_UPDATE: G_CONST.LEAGUE + G_CCONST.UPDATE,
-    TEAM_CREATE: G_CONST.TEAM + G_CCONST.CREATE,
-    FIXTURES_CREATE: G_CONST.FIXTURES + G_CCONST.CREATE,
-    MATCH_CREATE: G_CONST.MATCH + G_CCONST.CREATE,
     USER_CREATE: G_CONST.USER + G_CCONST.CREATE,
     USER_READ: G_CONST.USER + G_CCONST.READ,
+    LEAGUE_READ: G_CONST.LEAGUE + G_CCONST.READ,
+    FIXTURES_READ: G_CONST.FIXTURES + G_CCONST.READ,
+    MATCH_CREATE: G_CONST.MATCH + G_CCONST.CREATE,
+
+    LEAGUE_UPDATE: G_CONST.LEAGUE + G_CCONST.UPDATE,
+    TEAM_CREATE: G_CONST.TEAM + G_CCONST.CREATE,
     TEAM_INIT: G_CONST.PLAYERS + G_CCONST.INIT,
     TEAM_READ: G_CONST.PLAYERS + G_CCONST.READ
 });     
