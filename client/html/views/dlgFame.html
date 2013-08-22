@@ -10,6 +10,7 @@ div#fameDlg thead th:nth-child(8), div#fameDlg tbody td:nth-child(8) {width:40px
 div#fameDlg thead th:nth-child(9), div#fameDlg tbody td:nth-child(9) {width:40px}
 div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40px}
 </style>
+
 <div id=fameDlg class=uiModal>
     <div class=uiModalDlg style="width:910px;">
     <header>
@@ -50,7 +51,7 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
     </div>
 </div>
 
-<script templ=league type=text/templ>
+<script templ=leagueRow type=text/templ>
     <td scope=col>POS</td>
     <td scope=col>TEAM</td>
     <td scope=col>MP</td>
@@ -63,33 +64,72 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
     <td scope=col>PT</td>
 </script>
 
+<script templ=leagueFooter type=text/templ>
+    <tr><td colspan=10><span>DIVISION</span></td></tr>
+</script>
+
 <script name=fameDlg>
+    this.use(G_SESSION.LEAGUE_DATA);
+    this.use(G_SESSION.USER_DATA);
+
     var
     me = this,
+    Random = Math.random,
+    Floor = Math.floor,
     activeTab,
-    leagueRow = document.querySelector('script[templ=league]').textContent,
-    showLeague = function(){
+    leagueRow = document.querySelector('script[templ=leagueRow]').textContent,
+    leagueFooter = document.querySelector('script[templ=leagueFooter]').textContent,
+    tableBody = document.querySelector('div#fameDlg table.uiTable tbody'),
+    tableFoot = document.querySelector('div#fameDlg table.uiTable tfoot'),
+    showLeague = function(err, res){
         var
-        table = document.querySelector('div#fameDlg table.uiTable tbody'),
+        league = res['all'],
+        table = league.table,
+        leagueId = league.id,
         row;
 
-        table.innerHTML = '';
+        tableBody.innerHTML = '';
+
+        for(var i=0,l=table.length; i<l; i++){
+            row = document.createElement('tr');
+            score = table[i];
+
+            row.innerHTML = leagueRow
+                .replace('POS', score[0])
+                .replace('TEAM', score[1])
+                .replace('MP', score[2])
+                .replace('GF', score[6])
+                .replace('GA', score[7])
+                .replace('GD', score[8])
+                .replace('PT', score[9])
+                .replace('W', score[3])
+                .replace('D', score[4])
+                .replace('L', score[5]);
+            tableBody.appendChild(row);
+        }
+        tableFoot.innerHTML = leagueFooter.replace('DIVISION', 'Division '+leagueId);
+    },
+    showDemoLeague = function(){
+        var
+        row;
+        tableBody.innerHTML = '';
 
         for(var i=0,l=14; i<l; i++){
             row = document.createElement('tr');
             row.innerHTML = leagueRow
                 .replace('POS', (i+1))
                 .replace('TEAM', 'Team Name'+i)
-                .replace('MP', 1234)
-                .replace('GF', 1234)
-                .replace('GA', 1234)
-                .replace('GD', 1234)
-                .replace('PT', 1234)
-                .replace('W', 1234)
-                .replace('D', 1234)
-                .replace('L', 1234);
-            table.appendChild(row);
+                .replace('MP', Floor(Random()*64))
+                .replace('GF', Floor(Random()*640))
+                .replace('GA', Floor(Random()*640))
+                .replace('GD', Floor(Random()*640))
+                .replace('PT', Floor(Random()*192))
+                .replace('W', Floor(Random()*64))
+                .replace('D', Floor(Random()*64))
+                .replace('L', Floor(Random()*64));
+            tableBody.appendChild(row);
         }
+        tableFoot.innerHTML = leagueFooter.replace('DIVISION', 'Division '+Floor(Random()*100));
     },
     onChangePage = function(evt){
         evt.preventDefault();
@@ -102,13 +142,13 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
             activeTab = a;
             switch(a.textContent){
                 case 'England':
-                    showLeague();
+                    showDemoLeague();
                     break;
                 case 'Italy':
-                    showLeague();
+                    showDemoLeague();
                     break;
                 case 'Spain':
-                    showLeague();
+                    showDemoLeague();
                     break;
             }
         }
@@ -117,9 +157,14 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
     },
     onLoad = function(){
         var
+        leagueData = me[G_SESSION.LEAGUE_DATA],
+        userData = me[G_SESSION.USER_DATA],
         ul = document.querySelector('ul.uiTabs'),
         lis = ul.children,
         li, a;
+
+        var user = userData.getMe();
+        leagueData.request(G_CCONST.READ, {userId: user.userId}, showLeague);
 
         for(var i=0,l=lis.length; i<l; i++){
             li = lis[i];
@@ -130,7 +175,6 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
                 activeTab = a;
             }
         }
-        showLeague();
     };
 
     me.slot(pico.LOAD, onLoad);

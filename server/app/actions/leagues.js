@@ -1,27 +1,4 @@
-require('../config/const');
-
-var
-rosterCreator = require('node-esms/build/Release/roster_creator'),
-tsc = require('node-esms/build/Release/tsc'),
-fixtures = require('node-esms/build/Release/fixtures'),
-esms = require('node-esms/build/Release/esms'),
-updtr = require('node-esms/build/Release/updtr'),
-esmsOpt = {
-    set_rnd_seed: 56473,
-    penalty_diff: 1,
-    penalty_score: 1,
-    penalty_shootout: false,
-    team_stats_total: 0
-},
-updtrOpt = {
-    choice: 5
-};
-
-const
-MODEL_LEAGUE = G_SESSION.LEAGUE_DATA,
-MODEL_TEAM = G_SESSION.TEAM_DATA,
-MODEL_FIXTURES = G_SESSION.FIXTURES_DATA,
-MODEL_MATCH = G_SESSION.MATCH_DATA;
+var leagues = require('../models/leagues');
 
 function createMatch(session, order, next){
     var
@@ -84,7 +61,7 @@ function createFixtures(session, order, next){
 exports.setup = function(context, next){
     var web = context.webServer;
 
-    web.route(G_API.LEAGUE_READ, [createFixtures]);
+    web.route(G_API.LEAGUE_READ, [leagues.get]);
     web.route(G_API.FIXTURES_CREATE, [createFixtures]);
     web.route(G_API.MATCH_CREATE, [createMatch]);
 

@@ -15,7 +15,7 @@ exports.saveData = function(models, cb){
         if (err) return cb(err);
         sqlPlayers.save(data, function(err){
             if (err) return cb(err);
-            redisLeagues.add(info.insertId, function(err){
+            redisLeagues.add(info.insertId, data[G_CONST.CLUB_NAME], function(err){
                 if(err) return cb(err);
                 return cb(err, info);
             });
@@ -53,15 +53,6 @@ exports.create = function(session, order, cb){
     );
 
     data[G_CONST.TEAM] = memEsms.rosterCreator();
-
-    session.addJob(
-        api,
-        order.reqId,
-        undefined,
-        undefined,
-        G_PICO_WEB.RENDER_NO,
-        [[{modelId:MODEL_ID, key:email}]]
-    );
 
     cb();
 };

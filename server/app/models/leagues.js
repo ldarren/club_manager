@@ -5,6 +5,7 @@ redisLeagues = require('./redis/leagues'),
 memEsms = require('./mem/esms');
 
 const
+MODEL_ID = G_SESSION.LEAGUE_DATA,
 USER_MODEL_ID = G_SESSION.USER_DATA;
 
 exports.add = function(session, order, cb){
@@ -20,8 +21,27 @@ exports.add = function(session, order, cb){
     });
 };
 
-exports.getLeague = function(session, order, cb){
-    cb();
+exports.get = function(session, order, cb){
+    var userId = order.data[G_CONST.USER_ID];
+
+    redisLeagues.getLeague(userId, function(err, leagueId, table){
+        if (err) return cb(err);
+
+        var model = session.getModel(MODEL_ID);
+
+        model[userId] = { id:leagueId, table:table };
+
+        session.addJob(
+            order.api,
+            order.reqId,
+            undefined,
+            undefined,
+            G_PICO_WEB.RENDER_FULL,
+            [[{modelId:MODEL_ID, key:userId}]]
+        );
+
+        cb();
+    });
 };
 
 exports.updateLeague = function(session, order, cb){
