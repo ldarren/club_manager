@@ -15,8 +15,18 @@ exports.saveData = function(models, cb){
         if (err) return cb(err);
         var userId = info.insertId;
         data[G_CONST.USER_ID] = userId;
-        sqlPlayers.save(data, function(err){
+        sqlPlayers.save(data, function(err, info){
             if (err) return cb(err);
+            var
+            playerId = info.insertId,
+            players = data[G_CONST.TEAM],
+            player;
+
+            for(var i=0,l=players.length; i<l; i++){
+                player = players[i];
+                player.playerId = playerId++;
+            }
+            
             redisLeagues.add(userId, data[G_CONST.CLUB_NAME], function(err){
                 if(err) return cb(err);
                 return cb(err, models);

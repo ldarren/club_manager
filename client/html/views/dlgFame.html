@@ -81,6 +81,9 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
     leagueFooter = document.querySelector('script[templ=leagueFooter]').textContent,
     tableBody = document.querySelector('div#fameDlg table.uiTable tbody'),
     tableFoot = document.querySelector('div#fameDlg table.uiTable tfoot'),
+    sortScore = function(a, b){
+        return b[9] - a[9];
+    },
     showLeague = function(err, res){
         var
         league = res['all'],
@@ -89,6 +92,7 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
         row;
 
         tableBody.innerHTML = '';
+        table.sort(sortScore);
 
         for(var i=0,l=table.length; i<l; i++){
             row = document.createElement('tr');
@@ -131,22 +135,26 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
         }
         tableFoot.innerHTML = leagueFooter.replace('DIVISION', 'Division '+Floor(Random()*100));
     },
+    updatePage = function(){
+        var
+        leagueData = me[G_SESSION.LEAGUE_DATA],
+        userData = me[G_SESSION.USER_DATA],
+        user = userData.getMe();
+                    
+        leagueData.request(G_CCONST.READ, {userId: user.userId}, showLeague);
+    },
     onChangePage = function(evt){
         evt.preventDefault();
         evt.stopPropagation();
 
-        var
-        leagueData = me[G_SESSION.LEAGUE_DATA],
-        userData = me[G_SESSION.USER_DATA],
-        user = userData.getMe(),
-        a = evt.currentTarget;
+        var a = evt.currentTarget;
         if (a !== activeTab){
             activeTab.id = '';
             a.id = 'current';
             activeTab = a;
             switch(a.textContent){
                 case 'England':
-                    leagueData.request(G_CCONST.READ, {userId: user.userId}, showLeague);
+                    updatePage();
                     break;
                 case 'Italy':
                     showDemoLeague();
@@ -159,16 +167,16 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
 
         return false;
     },
+    onDlgOpen = function(oldHash, newHash){
+        if ('fameDlg' === newHash){
+            updatePage();
+        }
+    },
     onLoad = function(){
         var
-        leagueData = me[G_SESSION.LEAGUE_DATA],
-        userData = me[G_SESSION.USER_DATA],
         ul = document.querySelector('ul.uiTabs'),
         lis = ul.children,
         li, a;
-
-        var user = userData.getMe();
-        leagueData.request(G_CCONST.READ, {userId: user.userId}, showLeague);
 
         for(var i=0,l=lis.length; i<l; i++){
             li = lis[i];
@@ -182,4 +190,5 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
     };
 
     me.slot(pico.LOAD, onLoad);
+    pico.slot(pico.HASH_CHANGE, onDlgOpen);
 </script>
