@@ -39,8 +39,10 @@ div#stadiumDlg thead th:nth-child(5), div#stadiumDlg tbody td:nth-child(5) {widt
     <td scope=col><a uid1=USERID1 uid2=USERID2 href=#>Kickoff</a></td>
 </script>
 
-<script name=stadiumDlg>
-    this.use('commentDlg');
+<script name=dlgStadium>
+    this.use('dlgFame');
+    this.use('dlgTrain');
+    this.use('dlgComment');
     this.use(G_SESSION.FIXTURES_DATA);
     this.use(G_SESSION.MATCH_DATA);
     this.use(G_SESSION.USER_DATA);
@@ -65,7 +67,9 @@ div#stadiumDlg thead th:nth-child(5), div#stadiumDlg tbody td:nth-child(5) {widt
 
         matchData.request(G_CCONST.CREATE, data, function(err, res){
             if (err) return console.error(err);
-            me.commentDlg.show(res['all']);
+            me.dlgTrain.refresh();
+            me.dlgFame.refresh();
+            me.dlgComment.show(res['all']);
         });
 
         return false;
@@ -75,11 +79,14 @@ div#stadiumDlg thead th:nth-child(5), div#stadiumDlg tbody td:nth-child(5) {widt
         if (!fixture.list) return;
 
         var
+        userData = me[G_SESSION.USER_DATA],
+        user = userData.getMe(),
+        userId = user.userId,
         list = fixture.list,
         map = fixture.map,
         pos = 0,
         now = Date.now(),
-        row, matches, match, adv, a, dt, i, l, j, k;
+        row, matches, match, adv, a, dt, i, l, j, k, userId1, userId2;
 
         tableBody.innerHTML = '';
 
@@ -89,19 +96,24 @@ div#stadiumDlg thead th:nth-child(5), div#stadiumDlg tbody td:nth-child(5) {widt
 
             for(j=0,k=matches.length; j<k; j++){
                 match = matches[j];
-                row = document.createElement('tr');
+                userId1 = map[match[0]];
+                userId2 = map[match[1]];
 
                 adv += 21600000;
                 now += 21600000;
+
+                if (userId !== userId1 && userId !== userId2) continue;
+
                 dt = new Date(now);
+                row = document.createElement('tr');
 
                 row.innerHTML = fixtureRow
                     .replace('INDEX', ++pos)
                     .replace('TEAM1', match[0])
                     .replace('TEAM2', match[1])
                     .replace('DATETIME', (dt.toDateString() + ' ' + dt.toTimeString()))
-                    .replace('USERID1', map[match[0]])
-                    .replace('USERID2', map[match[1]]);
+                    .replace('USERID1', userId1)
+                    .replace('USERID2', userId2);
 
                 a = row.querySelector('a');
                 a.addEventListener('click', kickOff, false);
@@ -113,9 +125,9 @@ div#stadiumDlg thead th:nth-child(5), div#stadiumDlg tbody td:nth-child(5) {widt
     onLoad = function(){
         var
         fixtureData = me[G_SESSION.FIXTURES_DATA],
-        userData = me[G_SESSION.USER_DATA];
+        userData = me[G_SESSION.USER_DATA],
+        user = userData.getMe();
 
-        var user = userData.getMe();
         fixtureData.request(G_CCONST.READ, {userId: user.userId}, showFixture);
     };
 

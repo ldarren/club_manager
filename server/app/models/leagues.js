@@ -96,6 +96,7 @@ exports.createMatch = function(session, order, next){
                 report = memEsms.esms(ts1, ts2, r1, r2),
                 result = memEsms.updtr(report, table, r1, r2),
                 leagueTable = result.leagueTable,
+                teamStats = report.teamStatistics,
                 score, homeScore, awayScore;
 
                 for(var i=0,l=leagueTable.length; i<l; i++){
@@ -117,8 +118,8 @@ exports.createMatch = function(session, order, next){
                     [[session.createModelInfo(MATCH_MODEL_ID, key)]]
                 );
 
-                model[homeUserId] = [homeUserId, leagueId, homeScore];
-                model[awayUserId] = [awayUserId, leagueId, awayScore];
+                model[homeUserId] = [homeUserId, leagueId, homeScore, teamStats[0]];
+                model[awayUserId] = [awayUserId, leagueId, awayScore, teamStats[1]];
 
                 session.addJob(
                     order.api,
@@ -140,9 +141,13 @@ exports.updateLeague = function(models, cb){
     model = models[0],
     userId = model[0],
     leagueId = model[1],
-    score = model[2];
+    score = model[2],
+    team = model[3];
 
-    redisLeagues.updateLeague(leagueId, userId, score, function(err){
-        cb(err, models);
+    sqlPlayers.update(userId, Object.keys(team), team, function(err){
+        if (err) return cb(err);
+        redisLeagues.updateLeague(leagueId, userId, score, function(err){
+            cb(err, models);
+        });
     });
 };

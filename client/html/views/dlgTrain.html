@@ -61,7 +61,7 @@ div#trainDlg thead th:nth-child(10), div#trainDlg tbody td:nth-child(10) {width:
     me = this,
     selectedRow,
     trainRow = document.querySelector('script[templ=team]').textContent,
-    showTeam = function(){
+    showTeam = function(err, res){
         var
         userData = me[G_SESSION.USER_DATA],
         user = userData.getMe(),
@@ -86,6 +86,7 @@ div#trainDlg thead th:nth-child(10), div#trainDlg tbody td:nth-child(10) {width:
                 .replace('STAMINA', player.stamina)
                 .replace('AVAIL', player.injury > 0 || player.suspension > 0 ? 'No' : 'Yes');
             row.id = player.playerId;
+            row.addEventListener('click', onShowPlayerDetails, false);
             table.appendChild(row);
         }
     },
@@ -118,15 +119,15 @@ div#trainDlg thead th:nth-child(10), div#trainDlg tbody td:nth-child(10) {width:
     },
     onLoad = function(){
 
-        showTeam();
+        me.refresh();
+    };
 
+    me.refresh = function(){
         var
-        body = document.querySelector('div#trainDlg tbody'),
-        trs = body.querySelectorAll('tr');
-
-        for(var i=0,l=trs.length; i<l; i++){
-            trs[i].addEventListener('click', onShowPlayerDetails, false);
-        }
+        userData = me[G_SESSION.USER_DATA],
+        user = userData.getMe();
+                    
+        userData.request(G_CCONST.READ, {email: user.email}, showTeam);
     };
 
     me.slot(pico.LOAD, onLoad);

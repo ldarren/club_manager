@@ -68,7 +68,7 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
     <tr><td colspan=10><span>DIVISION</span></td></tr>
 </script>
 
-<script name=fameDlg>
+<script name=dlgFame>
     this.use(G_SESSION.LEAGUE_DATA);
     this.use(G_SESSION.USER_DATA);
 
@@ -82,7 +82,7 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
     tableBody = document.querySelector('div#fameDlg table.uiTable tbody'),
     tableFoot = document.querySelector('div#fameDlg table.uiTable tfoot'),
     sortScore = function(a, b){
-        return b[9] - a[9];
+        return b[0] - a[0];
     },
     showLeague = function(err, res){
         var
@@ -99,7 +99,7 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
             score = table[i];
 
             row.innerHTML = leagueRow
-                .replace('POS', score[0])
+                .replace('POS', score[0]+1)
                 .replace('TEAM', score[1])
                 .replace('MP', score[2])
                 .replace('GF', score[6])
@@ -135,14 +135,6 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
         }
         tableFoot.innerHTML = leagueFooter.replace('DIVISION', 'Division '+Floor(Random()*100));
     },
-    updatePage = function(){
-        var
-        leagueData = me[G_SESSION.LEAGUE_DATA],
-        userData = me[G_SESSION.USER_DATA],
-        user = userData.getMe();
-                    
-        leagueData.request(G_CCONST.READ, {userId: user.userId}, showLeague);
-    },
     onChangePage = function(evt){
         evt.preventDefault();
         evt.stopPropagation();
@@ -154,7 +146,7 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
             activeTab = a;
             switch(a.textContent){
                 case 'England':
-                    updatePage();
+                    me.refresh(); // TODO: should read from local
                     break;
                 case 'Italy':
                     showDemoLeague();
@@ -166,11 +158,6 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
         }
 
         return false;
-    },
-    onDlgOpen = function(oldHash, newHash){
-        if ('fameDlg' === newHash){
-            updatePage();
-        }
     },
     onLoad = function(){
         var
@@ -187,8 +174,18 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
                 activeTab = a;
             }
         }
+
+        me.refresh();
+    };
+
+    me.refresh = function(){
+        var
+        leagueData = me[G_SESSION.LEAGUE_DATA],
+        userData = me[G_SESSION.USER_DATA],
+        user = userData.getMe();
+                    
+        leagueData.request(G_CCONST.READ, {userId: user.userId}, showLeague);
     };
 
     me.slot(pico.LOAD, onLoad);
-    pico.slot(pico.HASH_CHANGE, onDlgOpen);
 </script>

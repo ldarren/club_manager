@@ -95,9 +95,11 @@ var onLoad = function(){
 
     pico.embed(playerDlg, 'views/dlgPlayer.html', function(){
         pico.embed(commentDlg, 'views/dlgComment.html', function(){
-            pico.embed(trainDlg, 'views/dlgTrain.html');
-            pico.embed(stadiumDlg, 'views/dlgStadium.html');
-            pico.embed(fameDlg, 'views/dlgFame.html');
+            pico.embed(trainDlg, 'views/dlgTrain.html', function(){
+                pico.embed(fameDlg, 'views/dlgFame.html', function(){
+                    pico.embed(stadiumDlg, 'views/dlgStadium.html', function(){});
+               });
+            });
         });
     });
 };
