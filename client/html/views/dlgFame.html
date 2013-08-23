@@ -82,7 +82,7 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
     tableBody = document.querySelector('div#fameDlg table.uiTable tbody'),
     tableFoot = document.querySelector('div#fameDlg table.uiTable tfoot'),
     sortScore = function(a, b){
-        return b[0] - a[0];
+        return a[0] - b[0];
     },
     showLeague = function(err, res){
         var
@@ -99,7 +99,7 @@ div#fameDlg thead th:nth-child(10), div#fameDlg tbody td:nth-child(10) {width:40
             score = table[i];
 
             row.innerHTML = leagueRow
-                .replace('POS', score[0]+1)
+                .replace('POS', i+1)
                 .replace('TEAM', score[1])
                 .replace('MP', score[2])
                 .replace('GF', score[6])
