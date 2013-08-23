@@ -10,8 +10,7 @@ getScoreKey = function(userId) { return KEY_SCORE + userId; },
 getRankKey = function(leagueId) { return KEY_RANK + leagueId; },
 createScore = function(clubName) { return JSON.stringify([0, clubName, 0, 0, 0, 0, 0, 0, 0, 0]); }
 addToLeague = function(leagueId, userId, clubName, cb){
-    var m = client.multi();
-    m
+    client.multi()
     .set(getScoreKey(userId), createScore(clubName))
     .zadd(getRankKey(leagueId), 0, userId)
     .zincrby(KEY_LEAGUE_POPULATION, 1, leagueId)
@@ -79,5 +78,11 @@ exports.getClubNames = function(userId, cb){
    });
 };
 
-exports.updateLeague = function(userId, league, cb){
+exports.updateLeague = function(leagueId, userId, score, cb){
+    var rankKey = getRankKey(leagueId);
+    
+    client.multi()
+    .zincrby(rankKey, score[9], userId)
+    .set(getScoreKey(userId), JSON.stringify(score))
+    .exec(cb);
 };

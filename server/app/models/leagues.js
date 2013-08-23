@@ -39,7 +39,7 @@ exports.get = function(session, order, next){
             undefined,
             undefined,
             G_PICO_WEB.RENDER_FULL,
-            [[{modelId:MODEL_ID, key:userId}]]
+            [[session.createModelInfo(MODEL_ID, userId)]]
         );
 
         next();
@@ -63,7 +63,7 @@ exports.makeFixture = function(session, order, next){
             undefined,
             undefined,
             G_PICO_WEB.RENDER_FULL,
-            [[session.createModelInfo(FIXTURE_MODEL_ID, userId)]]
+            [[session.createModelInfo(FIXTURES_MODEL_ID, userId)]]
         );
 
         next();
@@ -75,75 +75,74 @@ exports.createMatch = function(session, order, next){
     var
     model = session.getModel(MATCH_MODEL_ID),
     data = order.data,
-    userId1 = data[G_CONST.TEAM_HOME],
-    userId2 = data[G_CONST.TEAM_AWAY];
+    home = data[G_CONST.TEAM_HOME],
+    away = data[G_CONST.TEAM_AWAY],
+    homeUserId = home[G_CONST.USER_ID],
+    awayUserId = away[G_CONST.USER_ID],
+    homeName = home[G_CONST.CLUB_NAME],
+    awayName = away[G_CONST.CLUB_NAME];
 
+    sqlPlayers.getByUserId(homeUserId, function(err, r1){
+        if (err) return next(err);
+        sqlPlayers.getByUserId(awayUserId, function(err, r2){
+            if (err) return next(err);
 
+            redisLeagues.getLeague(homeUserId, function(err, leagueId, table){
+                if (err) return next(err);
 
+                var
+                ts1 = memEsms.tsc(homeName, '442N', r1),
+                ts2 = memEsms.tsc(awayName, '442N', r2),
+                report = memEsms.esms(ts1, ts2, r1, r2),
+                result = memEsms.updtr(report, table, r1, r2),
+                leagueTable = result.leagueTable,
+                score, homeScore, awayScore;
+
+                for(var i=0,l=leagueTable.length; i<l; i++){
+                    score = leagueTable[i];
+                    if (score[1] === homeName) homeScore = score;
+                    if (score[1] === awayName) awayScore = score;
+                    if (homeScore && awayScore) break;
+                }
+
+                var key = homeUserId+':'+awayUserId;
+                model[key] = {result: report.teamInfo, comment: report.commentary};
+
+                session.addJob(
+                    order.api,
+                    order.reqId,
+                    undefined,
+                    undefined,
+                    G_PICO_WEB.RENDER_FULL,
+                    [[session.createModelInfo(MATCH_MODEL_ID, key)]]
+                );
+
+                model[homeUserId] = [homeUserId, leagueId, homeScore];
+                model[awayUserId] = [awayUserId, leagueId, awayScore];
+
+                session.addJob(
+                    order.api,
+                    order.reqId,
+                    exports,
+                    exports.updateLeague,
+                    G_PICO_WEB.RENDER_NO,
+                    [[session.createModelInfo(MATCH_MODEL_ID, homeUserId)],[session.createModelInfo(MATCH_MODEL_ID, awayUserId)]]
+                );
+
+                next();
+            });
+        });
+    });
+};
+
+exports.updateLeague = function(models, cb){
     var
-    league, team1, team2,
-    n1 = team1.name,
-    n2 = team2.name,
-    r1 = team1.players,
-    r2 = team2.players,
-    ts1 = memEsms.tsc(n1, '442N', r1),
-    ts2 = memEsms.tsc(n2, '442N', r2),
-    report = memEsms.esms(ts1, ts2, r1, r2),
-    result = memEsms.updtr(report, league, r1, r2);
+    model = models[0],
+    userId = model[0],
+    leagueId = model[1],
+    score = model[2];
 
-    model['me'] = {result: report.teamInfo, comment: report.commentary, league:result.leagueTable};
-
-    session.addJob(
-        order.api,
-        order.reqId,
-        undefined,
-        undefined,
-        G_PICO_WEB.RENDER_FULL,
-        [[session.createModelInfo(MATCH_MODEL_ID, userId)]]
-    );
-
-    next();
-}
-
-exports.updateLeague = function(session, order, next){
-/*    var
-    model = session.getModel(MODEL_ID),
-    data = order.data,
-    api = order.api,
-    email = data[G_CONST.EMAIL];
-
-    if (model[email]) return next('already own a team');
-
-    if (
-        !data[G_CONST.MANAGER_NAME] || 
-        !data[G_CONST.MANAGER_NATION] || 
-        !data[G_CONST.CLUB_NAME] || 
-        !data[G_CONST.CLUB_GROUND]
-        )
-        return next('Not enough parameter');
-    
-    model[email] = data;
-
-    session.addJob(
-        api,
-        order.reqId,
-        sqlUsers,
-        sqlUsers.save,
-        G_PICO_WEB.RENDER_FULL,
-        [[{modelId:MODEL_ID, key:email}]],
-        G_CONST.USER_ID
-    );
-
-    data[G_CONST.TEAM] = memEsms.rosterCreator();
-
-    session.addJob(
-        api,
-        order.reqId,
-        sqlPlayers,
-        sqlPlayers.save,
-        G_PICO_WEB.RENDER_NO,
-        [[{modelId:MODEL_ID, key:email}]]
-    );
-*/
-    next();
+    redisLeagues.updateLeague(leagueId, userId, score, function(err){
+        cb(err, models);
+    });
 };

@@ -13,11 +13,13 @@ exports.saveData = function(models, cb){
 
     sqlUsers.save(data, function(err, info){
         if (err) return cb(err);
+        var userId = info.insertId;
+        data[G_CONST.USER_ID] = userId;
         sqlPlayers.save(data, function(err){
             if (err) return cb(err);
-            redisLeagues.add(info.insertId, data[G_CONST.CLUB_NAME], function(err){
+            redisLeagues.add(userId, data[G_CONST.CLUB_NAME], function(err){
                 if(err) return cb(err);
-                return cb(err, info);
+                return cb(err, models);
             });
         });
     });
@@ -48,8 +50,7 @@ exports.create = function(session, order, cb){
         exports,
         exports.saveData,
         G_PICO_WEB.RENDER_FULL,
-        [[{modelId:MODEL_ID, key:email}]],
-        G_CONST.USER_ID
+        [[session.createModelInfo(MODEL_ID, email)]]
     );
 
     data[G_CONST.TEAM] = memEsms.rosterCreator();
@@ -79,7 +80,7 @@ exports.loadTeam = function(session, order, cb){
             undefined,
             undefined,
             G_PICO_WEB.RENDER_NO,
-            [[{modelId:MODEL_ID, key:email}]]
+            [[session.createModelInfo(MODEL_ID, email)]]
         );
         cb();
     });
@@ -108,7 +109,7 @@ exports.loadTeamByEmail = function(session, order, cb){
             undefined,
             undefined,
             G_PICO_WEB.RENDER_FULL,
-            [[{modelId:MODEL_ID, key:email}]]
+            [[session.createModelInfo(MODEL_ID, email)]]
         );
         cb();
     });

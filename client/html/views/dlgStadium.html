@@ -56,19 +56,25 @@ div#stadiumDlg thead th:nth-child(5), div#stadiumDlg tbody td:nth-child(5) {widt
         var
         matchData = me[G_SESSION.MATCH_DATA],
         a = evt.currentTarget,
+        tr = a.parentNode.parentNode,
+        homeClubName = tr.children[1].textContent,
+        awayClubName = tr.children[2].textContent,
         homeUserId = parseInt(a.getAttribute('uid1')),
-        awayUserId = parseInt(a.getAttribute('uid2'));
+        awayUserId = parseInt(a.getAttribute('uid2')),
+        data = {home:{userId:homeUserId, club:homeClubName}, away:{userId:awayUserId, club:awayClubName}};
 
-        matchData.request(G_CCONST.CREATE, {home:homeUserId, away:awayUserId}, function(err, res){
+        matchData.request(G_CCONST.CREATE, data, function(err, res){
             if (err) return console.error(err);
-            me.commentDlg.show(res);
+            me.commentDlg.show(res['all']);
         });
 
         return false;
     },
     showFixture = function(err, res){
+        var fixture = res['all'];
+        if (!fixture.list) return;
+
         var
-        fixture = res['all'],
         list = fixture.list,
         map = fixture.map,
         pos = 0,

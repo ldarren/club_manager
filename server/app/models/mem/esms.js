@@ -43,7 +43,7 @@ module.exports = {
     tsc: function(teamName, plan, roster){
         return tsc(teamName, plan, roster, leagueDat);
     },
-    esme: function(teamSheet1, teamSheet2, roster1, roster2){
+    esms: function(teamSheet1, teamSheet2, roster1, roster2){
         return esms(esmsOpt, leagueDat, leagueAbilities, languageDat, tacticsDat, teamSheet1, teamSheet2, roster1, roster2);
     },
     updtr: function(report, league, roster1, roster2){

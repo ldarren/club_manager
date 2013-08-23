@@ -5,7 +5,7 @@ exports.setup = function(context, next){
 
     web.route(G_API.LEAGUE_READ, [leagues.get]);
     web.route(G_API.FIXTURES_READ, [leagues.makeFixture]);
-    web.route(G_API.MATCH_CREATE, [createMatch]);
+    web.route(G_API.MATCH_CREATE, [leagues.createMatch]);
 
     next();
 };
